@@ -8,7 +8,7 @@ class BinarySearchTree
 private:
 	Node<dataType> *root;
 	int maxLength;
-	std::string whiteSpace;
+	std::string whiteSpace;						//입력받은 값 중 최대길이만큼의 공백
 public:
 	BinarySearchTree();
 	~BinarySearchTree();
@@ -18,14 +18,15 @@ public:
 	Node<dataType> *getRoot();
 
 	bool isEmpty();
-	void getWhiteSpace();
+	void updateWhiteSpace();
 	void printAsTree(Node<dataType> *node, int level, bool continuous);
 };
 
-template <typename dataType>void BinarySearchTree<dataType>::getWhiteSpace()
+template <typename dataType>void BinarySearchTree<dataType>::updateWhiteSpace()
 {
+	whiteSpace = "";
 	for (int i = 0; i < maxLength; i++)
-		whiteSpace += "/";
+		whiteSpace += " ";
 }
 
 template <typename dataType>BinarySearchTree<dataType>::BinarySearchTree()
@@ -113,21 +114,22 @@ template <typename dataType> void BinarySearchTree<dataType>::printAsTree(Node<d
 	if (continuous == false)
 	{
 		std::cout << whiteSpace;
-		for (int i = 1; i < level; i++)
+		for (int i =  0; i < level - 1; i++)
 		{
-			std::cout << ";;;;;";
+			std::cout << "     ";										//이 공백은 ' --- '의 대체 공백이다.
 			std::cout << whiteSpace;
 		}
 	}
 	if(node != root)
 		std::cout << " --- ";
-	for (int i = maxLength - node->getData().length(); i > 0; i--)
-		std::cout << ".";
+	int currentLength = node->getData().length();
+	for (int i = maxLength - currentLength; i > 0; i--)					//최대길이보다 모자라면 모자란만큼 빈칸 추가
+		std::cout << " ";
 	std::cout << node->getData();
-	if (node->getLeft() == nullptr && node->getRight() != nullptr)
+	if (node->getLeft() == nullptr && node->getRight() != nullptr)		//왼쪽 자식이 없고 오른쪽 자식이 있으면 --x 표기
 		std::cout << " --x ";
 	printAsTree(node->getLeft(), level + 1, true);
-	if(node->getLeft() == nullptr)
+	if(node->getLeft() == nullptr)										//왼쪽자식이 없으면 한줄 띄우기
 		std::cout << "\n";
 	printAsTree(node->getRight(), level + 1, false);
 	

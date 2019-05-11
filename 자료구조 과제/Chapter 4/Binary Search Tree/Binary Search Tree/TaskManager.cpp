@@ -23,7 +23,7 @@ void TaskManager::insertStringAtBST(std::string str, BinarySearchTree<std::strin
 
 void TaskManager::printBST(BinarySearchTree<std::string> &bst)
 {
-	bst.getWhiteSpace();
+	bst.updateWhiteSpace();
 	bst.printAsTree(bst.getRoot(), 0, true);
 }
 
