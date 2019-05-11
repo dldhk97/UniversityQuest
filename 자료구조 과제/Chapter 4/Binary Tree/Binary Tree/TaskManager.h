@@ -32,30 +32,30 @@ template <typename dataType> int TaskManager<dataType>::getSize()
 
 template <typename dataType> void TaskManager<dataType>::printAsTree(BinaryTree<dataType> &iTree)
 {
-	iTree.printAsTree(1);
+	iTree.printAsTree(iTree.getRoot());
 	std::cout << "\n";
 }
 template <typename dataType> void TaskManager<dataType>::printAsPreorder(BinaryTree<dataType> &iTree)
 {
 	std::cout << "preorder  : ";
-	iTree.preorder(1);
+	iTree.preorder(iTree.getRoot());
 	std::cout << "\n";
 }
 template <typename dataType> void TaskManager<dataType>::printAsInorder(BinaryTree<dataType> &iTree)
 {
 	std::cout << "inorder   : ";
-	iTree.inorder(1);
+	iTree.inorder(iTree.getRoot());
 	std::cout << "\n";
 }
 template <typename dataType> void TaskManager<dataType>::printAsPostorder(BinaryTree<dataType> &iTree)
 {
 	std::cout << "postorder : ";
-	iTree.postorder(1);
+	iTree.postorder(iTree.getRoot());
 	std::cout << "\n";
 }
 template <typename dataType> void TaskManager<dataType>::printAsLevelorder(BinaryTree<dataType> &iTree)
 {
 	std::cout << "levelorder: ";
-	iTree.levelorder(1);
+	iTree.levelorder(iTree.getRoot());
 	std::cout << "\n";
 }

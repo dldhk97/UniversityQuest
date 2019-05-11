@@ -20,6 +20,8 @@ public:
 
 	int getLeft(int index);
 	int getRight(int index);
+	int getRoot();
+	int getLevel(int index);
 
 	void printAsTree(int index);
 	void preorder(int index);
@@ -28,7 +30,7 @@ public:
 	void levelorder(int root);
 };
 
-template <typename T>void BinaryTree<T>::getWhiteSpace()
+template <typename T>void BinaryTree<T>::getWhiteSpace()	//입력받은 값 중 최대값의 길이(magic number)만큼 기준 공백을 만든다.
 {
 	for (int i = 0; i < std::to_string(size).length(); i++)
 		whiteSpace += " ";
@@ -40,7 +42,7 @@ template <typename T>BinaryTree<T>::BinaryTree(int iSize)
 	size = iSize;
 	for (int i = 1; i <= size; i++)							//1~size까지 노드 새로만들어서 1~size 값 부여
 		nodeArr[i] = Node<T>(T(i));
-	getWhiteSpace();
+	getWhiteSpace();										//앞으로 입력을 추가로 받을일이 없으니 기준 공백계산.
 }
 
 template <typename T>BinaryTree<T>::~BinaryTree()
@@ -60,32 +62,45 @@ template <typename T> int BinaryTree<T>::getRight(int index)
 	return index * 2 + 1;
 }
 
+template <typename T> int BinaryTree<T>::getRoot()
+{
+	return 1;
+}
+
+template <typename T> int BinaryTree<T>::getLevel(int index)
+{
+	int level = 0;
+	for (int i = index; i != 1; i = i / 2)		//인덱스를 계속 반으로 쪼개서 레벨을 알아낸다
+		level++;
+	return level;
+}
+
 template <typename T> void BinaryTree<T>::printAsTree(int index)
 {
 	if (index <= size)
 	{
-		if (index % 2 && index != 1)					//홀수(새로운 브랜치가 생기는걸 의미)는 띄어쓰기 해준다
+		if (index % 2 && index != 1)						//홀수(새로운 브랜치)는 (레벨-1)번 반복하여 띄어쓰기 해준다
 		{
 			std::cout << " ";
-			int level = 0;
-			for (int i = index; i != 1; i = i / 2)		//인덱스를 계속 반으로 쪼개서 레벨을 알아낸다
-				level++;
-			for (int i = 0; i < level - 1; i++)			//레벨만큼 탭 해줌
+			int level = getLevel(index);
+			
+			for (int i = 0; i < level - 1; i++)				//레벨 - 1만큼 띄어쓰기 해줌
 			{
 				std::cout << "     ";
 				std::cout << whiteSpace;
 			}
 		}
-		if (index != 1)									//첫번째는 ---를 하지 않는다.
+		if (index != 1)										//첫번째는 --- 를 하지 않는다.
 		{
-			std::cout << " ";
-			std::cout << "---";
-			for (int i = std::to_string(size).length() + 1 - std::to_string(nodeArr[index].getData().getValue()).length(); i > 0; i--)
+			std::cout << " --- ";
+			int maxLength = std::to_string(size).length();
+			int currentLength = std::to_string(nodeArr[index].getData().getValue()).length();
+			for (int i = maxLength - currentLength; i > 0; i--)	//최대 길이까지 길이가 모자라다면 공백으로 채움
 				std::cout << " ";
 		}
-		std::cout << nodeArr[index].getData().getValue();
+		std::cout << nodeArr[index].getData();				//노드 출력
 
-		if (getLeft(index) > size)						//리프노드면 한줄 띄우기
+		if (getLeft(index) > size)							//리프노드(왼쪽자식 없음)면 한줄 띄우기
 			std::cout << '\n';
 		printAsTree(getLeft(index));
 		printAsTree(getRight(index));
