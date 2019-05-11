@@ -24,5 +24,6 @@ public:
 	//setter
 	void setData(std::string integerValue);	//수로써 저장
 	void setData(char operatorValue);		//연산자로써 저장
+
 };
 

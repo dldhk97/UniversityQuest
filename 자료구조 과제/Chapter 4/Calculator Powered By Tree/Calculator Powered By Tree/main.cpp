@@ -6,8 +6,6 @@ int main()
 {
 	TaskManager tskMgr;
 	string userInput;
-	Formula postfix;
-	BinaryTree<Term> formulaTree;
 
 	while (true)
 	{
@@ -22,6 +20,9 @@ int main()
 			break;
 		try
 		{
+			Formula postfix;
+			BinaryTree<Term> formulaTree;
+
 			tskMgr.saveAsPostfix(userInput, postfix);
 			tskMgr.printAsPostfix(postfix);
 			tskMgr.saveAsTree(postfix, formulaTree);

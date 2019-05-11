@@ -9,6 +9,7 @@ class BinaryTree
 private:
 	Node<T> *root;
 	int maxLength;
+	std::string whiteSpace;
 
 	void deleteMemory(Node<T> *iNode);
 public:
@@ -86,6 +87,9 @@ template <typename T>void BinaryTree<T>::calculateAsTree(Formula &postfix)
 					maxLength = std::to_string(currentTerm.getIntValue()).length();
 			}
 		}
+		
+		for (int i = 0; i < maxLength + 4; i++)
+			whiteSpace += " ";
 	}
 }
 
@@ -102,15 +106,11 @@ template <typename T> void BinaryTree<T>::printAsTree(Node<T> *iNode, int level,
 {
 	if (iNode == nullptr)
 		return;
-	
-	std::string whiteSpace;
-	for (int i = 0; i < maxLength + 4; i++)
-		whiteSpace += " ";
 
 	if (continuous == false)
 	{
 		std::cout << whiteSpace;
-		for (int i = 1; i < level; i++)
+		for (int i = 0; i < level - 1; i++)
 		{
 			std::cout << "     ";
 			std::cout << whiteSpace;
@@ -123,7 +123,7 @@ template <typename T> void BinaryTree<T>::printAsTree(Node<T> *iNode, int level,
 	
 	if (!iNode->getData().isOperator())
 		std::cout << "    ";
-	std::cout << iNode->getAsString();
+	std::cout << iNode->getStrWithOperator();
 	printAsTree(iNode->getLeft(), level + 1, true);
 	printAsTree(iNode->getRight(), level + 1, false);
 	if (iNode->getLeft() == nullptr)

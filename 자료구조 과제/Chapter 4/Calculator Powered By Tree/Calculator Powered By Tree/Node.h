@@ -21,7 +21,7 @@ public:
 	void setRight(Node *iNode);
 
 	void print();
-	std::string getAsString();
+	std::string getStrWithOperator();
 };
 
 //initializer
@@ -78,7 +78,7 @@ template <typename T>void Node<T>::print()
 	std::cout << data.getStrValue() << " ";
 }
 
-template <typename T>std::string Node<T>::getAsString()
+template <typename T>std::string Node<T>::getStrWithOperator()
 {
 	return data.getStrWithOperator();
 }
