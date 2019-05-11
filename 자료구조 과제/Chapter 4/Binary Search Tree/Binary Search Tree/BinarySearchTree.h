@@ -25,7 +25,7 @@ public:
 template <typename dataType>void BinarySearchTree<dataType>::getWhiteSpace()
 {
 	for (int i = 0; i < maxLength; i++)
-		whiteSpace += " ";
+		whiteSpace += "/";
 }
 
 template <typename dataType>BinarySearchTree<dataType>::BinarySearchTree()
@@ -112,13 +112,15 @@ template <typename dataType> void BinarySearchTree<dataType>::printAsTree(Node<d
 
 	if (continuous == false)
 	{
-		for (int i = 0; i < level; i++)
+		std::cout << whiteSpace;
+		for (int i = 1; i < level; i++)
 		{
 			std::cout << ";;;;;";
 			std::cout << whiteSpace;
 		}
 	}
-	std::cout << " --- ";
+	if(node != root)
+		std::cout << " --- ";
 	for (int i = maxLength - node->getData().length(); i > 0; i--)
 		std::cout << ".";
 	std::cout << node->getData();
