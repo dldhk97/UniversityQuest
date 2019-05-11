@@ -13,6 +13,7 @@ private:
 
 	void deleteMemory(Node<T> *iNode);
 	void updateMaxLength(int newLength);
+	void updateWhiteSpace();
 public:
 	~BinaryTree();
 
@@ -37,6 +38,11 @@ template <typename T>void BinaryTree<T>::updateMaxLength(int newLength)
 	if (newLength > maxLength)			//연산된 결과값이 기존 최대길이보다 크면 갱신
 		maxLength = newLength;
 }
+template <typename T>void BinaryTree<T>::updateWhiteSpace()
+{
+	for (int i = 0; i < maxLength + 4; i++)
+		whiteSpace += " ";
+}
 
 template <typename T>BinaryTree<T>::~BinaryTree()
 {
@@ -53,7 +59,7 @@ template <typename T>void BinaryTree<T>::calculateAsTree(Formula &postfix)
 	if (postfix.getSize() == 1)
 	{
 		root = new Node<T>(postfix.getTerm(0));
-		maxLength = std::to_string(postfix.getTerm(0).getIntValue()).length();
+		updateMaxLength(std::to_string(postfix.getTerm(0).getIntValue()).length());
 	}
 	else
 	{
@@ -92,9 +98,8 @@ template <typename T>void BinaryTree<T>::calculateAsTree(Formula &postfix)
 				updateMaxLength(std::to_string(currentTerm.getIntValue()).length());
 			}
 		}
-		for (int i = 0; i < maxLength + 4; i++)
-			whiteSpace += " ";
 	}
+	updateWhiteSpace();
 }
 
 template <typename T> void BinaryTree<T>::preorder(Node<T> *iNode)
@@ -116,7 +121,7 @@ template <typename T> void BinaryTree<T>::printAsTree(Node<T> *iNode, int level,
 		std::cout << whiteSpace;
 		for (int i = 0; i < level - 1; i++)
 		{
-			std::cout << "     ";								//이것의 길이는 ' --- '의 길이와 동일하다.
+			std::cout << "     ";								//이 공백은 ' --- '을 대체한다.
 			std::cout << whiteSpace;
 		}
 	}
