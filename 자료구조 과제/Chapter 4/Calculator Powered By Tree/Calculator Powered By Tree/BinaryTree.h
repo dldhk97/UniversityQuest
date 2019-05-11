@@ -9,9 +9,10 @@ class BinaryTree
 private:
 	Node<T> *root;
 	int maxLength;
-	std::string whiteSpace;
+	std::string whiteSpace;					//입력된 가장 큰 값의 길이만큼의 공백
 
 	void deleteMemory(Node<T> *iNode);
+	void updateMaxLength(int newLength);
 public:
 	~BinaryTree();
 
@@ -29,6 +30,12 @@ template <typename T>void BinaryTree<T>::deleteMemory(Node<T> *iNode)
 	deleteMemory(iNode->getLeft());
 	deleteMemory(iNode->getRight());
 	delete iNode;
+}
+
+template <typename T>void BinaryTree<T>::updateMaxLength(int newLength)
+{
+	if (newLength > maxLength)			//연산된 결과값이 기존 최대길이보다 크면 갱신
+		maxLength = newLength;
 }
 
 template <typename T>BinaryTree<T>::~BinaryTree()
@@ -76,18 +83,15 @@ template <typename T>void BinaryTree<T>::calculateAsTree(Formula &postfix)
 					root->setRight(A);
 				}
 				newStack.push(root);
-				if (std::to_string(result).length() > maxLength)
-					maxLength = std::to_string(result).length();
+				updateMaxLength(std::to_string(result).length());
 			}
 			else
 			{
 				Node<T> *newNode = new Node<T>(currentTerm);
 				newStack.push(newNode);
-				if (std::to_string(currentTerm.getIntValue()).length() > maxLength)
-					maxLength = std::to_string(currentTerm.getIntValue()).length();
+				updateMaxLength(std::to_string(currentTerm.getIntValue()).length());
 			}
 		}
-		
 		for (int i = 0; i < maxLength + 4; i++)
 			whiteSpace += " ";
 	}
@@ -107,25 +111,28 @@ template <typename T> void BinaryTree<T>::printAsTree(Node<T> *iNode, int level,
 	if (iNode == nullptr)
 		return;
 
-	if (continuous == false)
+	if (continuous == false)									//새로운 브랜치이면 level - 1 만큼 공백출력. 가장 처음은 whitespace만 출력해준다.
 	{
 		std::cout << whiteSpace;
 		for (int i = 0; i < level - 1; i++)
 		{
-			std::cout << "     ";
+			std::cout << "     ";								//이것의 길이는 ' --- '의 길이와 동일하다.
 			std::cout << whiteSpace;
 		}
 	}
+
 	if(iNode != root)
 		std::cout << " --- ";
-	for (int i = maxLength - std::to_string(iNode->getData().getIntValue()).length() ; i > 0 ; i--)
+
+	int currentLength = std::to_string(iNode->getData().getIntValue()).length();
+	for (int i = maxLength - currentLength; i > 0 ; i--)		//최대길이보다 현재길이가 모자라면 남은부분은 공백추가
 		std::cout << " ";
 	
-	if (!iNode->getData().isOperator())
+	if (!iNode->getData().isOperator())							//이번값이 순수한 숫자값만 가진 노드면, 연산자 길이(4번의 공백)만큼 띄운다.
 		std::cout << "    ";
 	std::cout << iNode->getStrWithOperator();
 	printAsTree(iNode->getLeft(), level + 1, true);
 	printAsTree(iNode->getRight(), level + 1, false);
-	if (iNode->getLeft() == nullptr)
+	if (iNode->getLeft() == nullptr)							//왼쪽자식이 없으면 엔터
 		std::cout << "\n";
 }
