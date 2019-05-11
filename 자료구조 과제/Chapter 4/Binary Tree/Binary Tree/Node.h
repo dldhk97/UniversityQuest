@@ -14,7 +14,6 @@ public:
 	T getData();
 
 	void setData(T iData);
-	void printData();
 };
 
 template <typename T> Node<T>::Node()
@@ -34,9 +33,4 @@ template <typename T> T Node<T>::getData()
 template <typename T> void Node<T>::setData(T iData)
 {
 	data = iData;
-}
-
-template <typename T> void Node<T>::printData()
-{
-	std::cout << data;
 }

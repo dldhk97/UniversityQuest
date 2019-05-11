@@ -111,8 +111,7 @@ template <typename T> void BinaryTree<T>::preorder(int index)
 {
 	if (index <= size)
 	{
-		nodeArr[index].printData();
-		std::cout << " ";
+		std::cout << nodeArr[index].getData() << " ";
 		preorder(getLeft(index));
 		preorder(getRight(index));
 	}
@@ -122,8 +121,7 @@ template <typename T> void BinaryTree<T>::inorder(int index)
 	if (index <= size)
 	{
 		inorder(getLeft(index));
-		nodeArr[index].printData();
-		std::cout << " ";
+		std::cout << nodeArr[index].getData() << " ";
 		inorder(getRight(index));
 	}
 }
@@ -133,8 +131,7 @@ template <typename T> void BinaryTree<T>::postorder(int index)
 	{
 		postorder(getLeft(index));
 		postorder(getRight(index));
-		nodeArr[index].printData();
-		std::cout << " ";
+		std::cout << nodeArr[index].getData() << " ";
 	}
 }
 template <typename T> void BinaryTree<T>::levelorder(int root)
@@ -145,8 +142,7 @@ template <typename T> void BinaryTree<T>::levelorder(int root)
 	while (!newQueue.isEmpty())
 	{
 		index = newQueue.pop();
-		nodeArr[index].printData();
-		std::cout << " ";
+		std::cout << nodeArr[index].getData() << " ";
 		if (getLeft(index) <= size)
 			newQueue.push(getLeft(index));
 		if (getRight(index) <= size)
