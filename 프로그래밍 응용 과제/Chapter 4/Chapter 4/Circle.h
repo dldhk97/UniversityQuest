@@ -15,7 +15,8 @@ public:
 	Circle(double radius, int posX, int posY);
 	~Circle();
 
-	virtual void print();
+	double getRadius();
 
+	virtual void print();
 };
 

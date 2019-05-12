@@ -1,14 +1,18 @@
 #include "TaskManager.h"
 
-const std::string FILE_LOCATION = "C:\\Users\\Administrator\\source\repos\\dldhk97\\UniversityQuest\\프로그래밍 응용 과제\\Chapter 4\\shape.dat";
+const std::string FILE_LOCATION = "C:\\shape.dat";
 
 int main()
 {
 	TaskManager tskMgr;
 	IOHandler ioh;
 	FigureList fgrList;
-
 	int userInput;
+	bool isChanged = false;
+
+	if (!ioh.loadFile(fgrList, FILE_LOCATION))
+		return 0;
+
 	while (1)
 	{
 		userInput = ioh.getMenu();
@@ -18,10 +22,12 @@ int main()
 		switch (userInput)
 		{
 		case INSERT:
-			tskMgr.insertFigure(fgrList);
+			if (tskMgr.insertFigure(fgrList))
+				isChanged = true;
 			break;
 		case DELETE:
-			tskMgr.deleteFigure(fgrList);
+			if (tskMgr.deleteFigure(fgrList))
+				isChanged = true;
 			break;
 		case PRINT:
 			tskMgr.insertionSort(fgrList);
@@ -29,6 +35,10 @@ int main()
 			break;
 		}
 	}
-
+	if (isChanged)
+	{
+		tskMgr.insertionSort(fgrList);
+		ioh.saveFile(fgrList, FILE_LOCATION);
+	}
 	return 0;
 }

@@ -1,6 +1,6 @@
 #include "TaskManager.h"
 
-void TaskManager::insertFigure(FigureList &figureList)
+bool TaskManager::insertFigure(FigureList &figureList)
 {
 	IOHandler ioh;
 	
@@ -24,24 +24,26 @@ void TaskManager::insertFigure(FigureList &figureList)
 		newSquare = ioh.getSquare();
 		figureList.insertFigure(newSquare);
 	}
+	return true;
 }
-void TaskManager::deleteFigure(FigureList &figureList)
+bool TaskManager::deleteFigure(FigureList &figureList)
 {
 	IOHandler ioh;
 	if (figureList.getSize() <= 0)
 	{
 		ioh.printMessage("도형 목록이 비어있습니다.");
-		return;
+		return false;
 	}
 	int id = ioh.getInt("삭제할 도형의 ID 입력 :");
 	int index = figureList.findFigure(id);
 	if (index == NOT_FOUND)
 	{
 		ioh.printMessage("도형을 찾을 수 없습니다.");
-		return;
+		return false;
 	}
 	figureList.deleteFigure(index);
 	ioh.printMessage("삭제되었습니다.");
+	return true;
 }
 void TaskManager::printFigureList(FigureList &figureList)
 {

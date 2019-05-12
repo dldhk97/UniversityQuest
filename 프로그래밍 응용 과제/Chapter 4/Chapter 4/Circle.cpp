@@ -19,6 +19,10 @@ Circle::~Circle()
 {
 }
 
+double Circle::getRadius()
+{
+	return radius;
+}
 
 void Circle::print()
 {

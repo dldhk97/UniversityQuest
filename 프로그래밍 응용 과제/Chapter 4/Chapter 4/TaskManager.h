@@ -5,8 +5,8 @@
 class TaskManager
 {
 public:
-	void insertFigure(FigureList &figureList);
-	void deleteFigure(FigureList &figureList);
+	bool insertFigure(FigureList &figureList);
+	bool deleteFigure(FigureList &figureList);
 	void printFigureList(FigureList &figureList);
 	void insertionSort(FigureList &figureList);
 };
