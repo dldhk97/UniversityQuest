@@ -133,7 +133,7 @@ template <typename T> void BinaryTree<T>::printAsTree(Node<T> *iNode, int level,
 	for (int i = maxLength - currentLength; i > 0 ; i--)		//최대길이보다 현재길이가 모자라면 남은부분은 공백추가
 		std::cout << " ";
 	
-	if (!iNode->getData().isOperator())							//이번값이 순수한 숫자값만 가진 노드면, 연산자 길이(4번의 공백)만큼 띄운다.
+	if (!iNode->getData().isOperator() && iNode != root)		//이번값이 순수한 숫자값만 가진 노드면, 본래 연산자가 들어갈 부분을 공백으로 채운다.
 		std::cout << "    ";
 	std::cout << iNode->getStrWithOperator();
 	printAsTree(iNode->getLeft(), level + 1, true);
