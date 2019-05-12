@@ -20,5 +20,6 @@ public:
 	double getPerimeter();
 
 	virtual void print();
+	virtual std::string to_string();
 };
 

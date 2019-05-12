@@ -37,3 +37,7 @@ void Figure::print()
 {
 
 }
+std::string Figure::to_string()
+{
+	return "";
+}

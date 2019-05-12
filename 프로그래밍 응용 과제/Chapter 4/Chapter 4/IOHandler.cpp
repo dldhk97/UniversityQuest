@@ -49,7 +49,7 @@ int IOHandler::getFigureType()
 
 Circle *IOHandler::getCircle()
 {
-	int posX, posY;
+	double posX, posY;
 	double radius;
 	std::cout << "중심 좌표 x 입력 :";
 	std::cin >> posX;
@@ -96,31 +96,47 @@ void IOHandler::printFigure(Figure *figure)
 
 bool IOHandler::loadFile(FigureList &figureList, std::string fileLocation)
 {
-	//figureList.setLastId(라스트아이디);	//해야된다.
 	std::ifstream openFile(fileLocation);
 	if (openFile.is_open())
 	{
-		std::string line;
-		std::string tempArr[6];
-		int saveIndex, previousIndex;
+		int lastId;
+		openFile >> lastId;
+		figureList.setLastId(lastId);		//마지막 ID 갱신
 
-		/*while (getline(openFile, line))
+		int figureType, id;
+		double posX, posY, width, height;
+		while (!openFile.eof())
 		{
-			saveIndex = 0;
-			previousIndex = 0;
-			for (int i = 0; i < line.length(); i++)
+			openFile >> figureType;			//도형 타입 알아내기
+			switch (figureType)
 			{
-				if (line[i] == ' ' || i == line.length() - 1)
+				case CIRCLE:
 				{
-					if (i == line.length() - 1)
-						i++;
-					string tempStr = line.substr(previousIndex, i - previousIndex);
-					tempArr[saveIndex++] = tempStr;
-					previousIndex = i + 1;
+					openFile >> id >> posX >> posY >> width;
+					Circle *newCircle = new Circle(width, posX, posY);
+					newCircle->setId(id);
+					figureList.insertFigure(newCircle);
+					break;
+				}
+				case TRIANGLE:
+				{
+					openFile >> id >> posX >> posY >> width >> height;
+					Triangle *newTriangle = new Triangle(width, height, posX, posY);
+					newTriangle->setId(id);
+					figureList.insertFigure(newTriangle);
+					break;
+				}
+				case SQUARE:
+				{
+					openFile >> id >> posX >> posY >> width >> height;
+					Square *newSquare = new Square(width, height, posX, posY);
+					newSquare->setId(id);
+					figureList.insertFigure(newSquare);
+					break;
 				}
 			}
-			iList.insertComponent(Component(stoi(tempArr[0]), tempArr[1], tempArr[2], tempArr[3], tempArr[4], tempArr[5]));
-		}*/
+			figureType = -1;
+		}
 		openFile.close();
 		return true;
 	}
@@ -132,31 +148,16 @@ void IOHandler::saveFile(FigureList &figureList, std::string fileLocation)
 	std::ofstream writeFile(fileLocation);
 	if (writeFile.is_open())				//파일이 열려있다면
 	{
-		if (figureList.getSize() <= 0)			//list가 비어있다면 공백 저장
+		writeFile << figureList.getLastId() << "\n";			//마지막 id 저장
+		if (figureList.getSize() <= 0)
 		{
-			writeFile << "";
 			std::cout << "빈 목록을 저장하였습니다." << "\n";
 			return;
 		}
 		for (int i = 0; i < figureList.getSize(); i++)
 		{
 			Figure *currentFigure = figureList.getFigure(i);
-			if (typeid(*currentFigure).name() == typeid(Circle).name())
-			{
-				writeFile << typeid(*currentFigure).name() << currentFigure->getId() << " " 
-					<< currentFigure->getPosX() << " " << currentFigure->getPosY() << " "
-					//<< currentFigure->getRadius() << " " << currentFigure->getComponentName() << " "
-					<< currentFigure->getArea() << " " << currentFigure->getPerimeter() << "\n";
-			}
-			else if (typeid(*currentFigure).name() == typeid(Triangle).name())
-			{
-
-			}
-			else if (typeid(*currentFigure).name() == typeid(Square).name())
-			{
-
-			}
-			
+			writeFile << currentFigure->to_string() << "\n";
 		}
 		writeFile.close();
 		std::cout << "도형 목록을 저장하였습니다." << "\n";

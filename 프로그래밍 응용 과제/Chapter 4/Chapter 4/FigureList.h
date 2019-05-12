@@ -21,6 +21,7 @@ public:
 	Figure *getFigure(int index);
 	int getSize();
 	int getCapacity();
+	int getLastId();
 
 	void setLastId(int lastId);
 

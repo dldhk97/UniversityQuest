@@ -8,6 +8,7 @@ Square::Square()
 
 Square::Square(double width, double height)
 {
+	this->id = NOT_FOUND;
 	this->posX = 0;
 	this->posY = 0;
 	this->width = width;
@@ -16,8 +17,9 @@ Square::Square(double width, double height)
 	this->perimeter = (width + height) * 2;
 }
 
-Square::Square(double width, double height, int posX, int posY)
+Square::Square(double width, double height, double posX, double posY)
 {
+	this->id = NOT_FOUND;
 	this->posX = posX;
 	this->posY = posY;
 	this->width = width;
@@ -44,4 +46,9 @@ void Square::print()
 	ioh.printMessage("²ÀÁþÁ¡ 2 :(" + std::to_string(posX) + ", " + std::to_string(posY + height) + ")");
 	ioh.printMessage("²ÀÁþÁ¡ 3 :(" + std::to_string(posX + width) + ", " + std::to_string(posY) + ")");
 	ioh.printMessage("²ÀÁþÁ¡ 4 :(" + std::to_string(posX + width) + ", " + std::to_string(posY + height) + ")");
+}
+
+std::string Square::to_string()
+{
+	return std::to_string(SQUARE) + ' ' + std::to_string(id) + ' ' + std::to_string(posX) + ' ' + std::to_string(posY) + ' ' + std::to_string(width) + ' ' + std::to_string(height);
 }

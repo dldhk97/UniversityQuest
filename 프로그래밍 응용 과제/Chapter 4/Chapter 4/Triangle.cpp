@@ -6,6 +6,7 @@ Triangle::Triangle()
 }
 Triangle::Triangle(double width, double height)
 {
+	this->id = NOT_FOUND;
 	this->posX = 0;
 	this->posY = 0;
 	this->width = width;
@@ -14,8 +15,9 @@ Triangle::Triangle(double width, double height)
 	this->hypotenuse = sqrt(width * width + height * height);
 	this->perimeter = width + height + this->hypotenuse;
 }
-Triangle::Triangle(double width, double height, int posX, int posY)
+Triangle::Triangle(double width, double height, double posX, double posY)
 {
+	this->id = NOT_FOUND;
 	this->posX = posX;
 	this->posY = posY;
 	this->width = width;
@@ -43,4 +45,9 @@ void Triangle::print()
 	ioh.printMessage("²ÀÁþÁ¡ 1 :(" + std::to_string(posX) + ", " + std::to_string(posY) + ")");
 	ioh.printMessage("²ÀÁþÁ¡ 2 :(" + std::to_string(posX) + ", " + std::to_string(posY + height) + ")");
 	ioh.printMessage("²ÀÁþÁ¡ 3 :(" + std::to_string(posX + width) + ", " + std::to_string(posY) + ")");
+}
+
+std::string Triangle::to_string()
+{
+	return std::to_string(TRIANGLE) + ' ' + std::to_string(id) + ' ' + std::to_string(posX) + ' ' + std::to_string(posY) + ' ' + std::to_string(width) + ' ' + std::to_string(height);
 }

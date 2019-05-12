@@ -12,11 +12,12 @@ private:
 	double radius;
 public:
 	Circle();
-	Circle(double radius, int posX, int posY);
+	Circle(double radius, double posX, double posY);
 	~Circle();
 
 	double getRadius();
 
 	virtual void print();
+	virtual std::string to_string();
 };
 

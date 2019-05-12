@@ -37,8 +37,8 @@ int main()
 	}
 	if (isChanged)
 	{
-		tskMgr.insertionSort(fgrList);
 		ioh.saveFile(fgrList, FILE_LOCATION);
 	}
+	ioh.printMessage("종료합니다.");
 	return 0;
 }

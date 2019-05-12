@@ -26,6 +26,11 @@ int FigureList::getCapacity()
 	return capacity;
 }
 
+int FigureList::getLastId()
+{
+	return lastId;	
+}
+
 void FigureList::setLastId(int lastId)
 {
 	this->lastId = lastId;
@@ -35,7 +40,8 @@ void FigureList::insertFigure(Figure *newFigure)
 {
 	if (size >= capacity)
 		resize(capacity * 2);
-	newFigure->setId(++lastId);
+	if(newFigure->getId() == NOT_FOUND)
+		newFigure->setId(++lastId);
 	dataArr[size++] = newFigure;
 }
 void FigureList::deleteFigure(int index)
