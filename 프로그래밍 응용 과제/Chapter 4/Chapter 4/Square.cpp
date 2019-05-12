@@ -41,7 +41,7 @@ void Square::print()
 	ioh.printMessage("¸éÀû :" + std::to_string(area));
 	ioh.printMessage("µÑ·¹ :" + std::to_string(perimeter));
 	ioh.printMessage("²ÀÁþÁ¡ 1 :(" + std::to_string(posX) + ", " + std::to_string(posY) + ")");
-	ioh.printMessage("²ÀÁþÁ¡ 2 :(" + std::to_string(posX) + ", " + std::to_string(posY + (int)height) + ")");
-	ioh.printMessage("²ÀÁþÁ¡ 3 :(" + std::to_string(posX + (int)width) + ", " + std::to_string(posY) + ")");
-	ioh.printMessage("²ÀÁþÁ¡ 4 :(" + std::to_string(posX + (int)width) + ", " + std::to_string(posY + (int)height) + ")");
+	ioh.printMessage("²ÀÁþÁ¡ 2 :(" + std::to_string(posX) + ", " + std::to_string(posY + height) + ")");
+	ioh.printMessage("²ÀÁþÁ¡ 3 :(" + std::to_string(posX + width) + ", " + std::to_string(posY) + ")");
+	ioh.printMessage("²ÀÁþÁ¡ 4 :(" + std::to_string(posX + width) + ", " + std::to_string(posY + height) + ")");
 }

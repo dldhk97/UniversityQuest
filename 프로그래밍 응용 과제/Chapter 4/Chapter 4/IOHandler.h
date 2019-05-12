@@ -28,7 +28,7 @@ public:
 	void printMessage(std::string message);
 	void printFigure(Figure *figure);
 
-	bool loadFile(FigureList &figureList);
+	bool loadFile(FigureList &figureList, std::string dataLocation);
 	void saveFile(FigureList &figureList);
 };
 

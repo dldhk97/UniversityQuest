@@ -5,8 +5,8 @@
 class Figure
 {
 protected:
-	int id, posX, posY;
-	double area, perimeter;		//면적, 둘레
+	int id;
+	double posX, posY, area, perimeter;		//면적, 둘레
 public:
 	Figure();
 	~Figure();

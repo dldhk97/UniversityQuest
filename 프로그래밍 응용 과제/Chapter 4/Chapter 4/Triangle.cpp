@@ -41,6 +41,6 @@ void Triangle::print()
 	ioh.printMessage("µÑ·¹ :" + std::to_string(perimeter));
 	ioh.printMessage("ºøº¯ ±æÀÌ :" + std::to_string(hypotenuse));
 	ioh.printMessage("²ÀÁþÁ¡ 1 :(" + std::to_string(posX) + ", " + std::to_string(posY) + ")");
-	ioh.printMessage("²ÀÁþÁ¡ 2 :(" + std::to_string(posX) + ", " + std::to_string(posY + (int)height) + ")");
-	ioh.printMessage("²ÀÁþÁ¡ 3 :(" + std::to_string(posX + (int)width) + ", " + std::to_string(posY) + ")");
+	ioh.printMessage("²ÀÁþÁ¡ 2 :(" + std::to_string(posX) + ", " + std::to_string(posY + height) + ")");
+	ioh.printMessage("²ÀÁþÁ¡ 3 :(" + std::to_string(posX + width) + ", " + std::to_string(posY) + ")");
 }

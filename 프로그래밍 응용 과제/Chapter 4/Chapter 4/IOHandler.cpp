@@ -13,6 +13,7 @@ int IOHandler::getMenu()
 		std::cout << "4) 종료" << "\n";
 		std::cout << "====================================================" << '\n';
 		std::cin >> userInput;
+
 		if (INSERT <= userInput && userInput <= EXIT)
 			return userInput;
 		std::cout << "잘못된 입력입니다." << '\n';
@@ -94,7 +95,7 @@ void IOHandler::printFigure(Figure *figure)
 	figure->print();
 }
 
-bool IOHandler::loadFile(FigureList &figureList)
+bool IOHandler::loadFile(FigureList &figureList, std::string dataLocation)
 {
 	//figureList.setLastId(라스트아이디);	//해야된다.
 	return false;

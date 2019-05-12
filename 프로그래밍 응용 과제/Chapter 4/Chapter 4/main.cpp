@@ -1,6 +1,6 @@
 #include "TaskManager.h"
 
-const std::string FILE_LOCATION = "C:\test.txt";
+const std::string FILE_LOCATION = "C:\\Users\\Administrator\\source\repos\\dldhk97\\UniversityQuest\\프로그래밍 응용 과제\\Chapter 4\\shape.dat";
 
 int main()
 {
