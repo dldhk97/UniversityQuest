@@ -10,7 +10,14 @@ FigureList::FigureList()
 FigureList::~FigureList()
 {
 	if (dataArr != nullptr)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			if(dataArr[i] != nullptr)
+				delete dataArr[i];
+		}
 		delete[] dataArr;
+	}
 }
 
 Figure *FigureList::getFigure(int index)
@@ -46,6 +53,7 @@ void FigureList::insertFigure(Figure *newFigure)
 }
 void FigureList::deleteFigure(int index)
 {
+	delete dataArr[index];
 	dataArr[index] = dataArr[size - 1];
 	size--;
 	if (size <= capacity / 4)
