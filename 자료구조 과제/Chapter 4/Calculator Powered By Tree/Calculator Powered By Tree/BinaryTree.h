@@ -72,19 +72,19 @@ template <typename T>void BinaryTree<T>::calculateAsTree(Formula &postfix)
 				int result;
 				Node<T> *root = new Node<T>();
 				this->root = root;
-				if (currentTerm.getStrValue()[0] == '~' || currentTerm.getStrValue()[0] == '#')	//단항연산자 계산
+				if (currentTerm.getOperatorValue() == '~' || currentTerm.getOperatorValue() == '#')	//단항연산자 계산
 				{
 					Node<T> *C = newStack.pop();
-					result = postfix.processUnaryOperator(C->getData().getIntValue(), currentTerm.getStrValue()[0]);
-					root->setData(Term(std::to_string(result), currentTerm.getStrValue()[0]));
+					result = postfix.processUnaryOperator(C->getData().getIntValue(), currentTerm.getOperatorValue());
+					root->setData(Term(std::to_string(result), currentTerm.getOperatorValue()));
 					root->setLeft(C);
 				}
 				else
 				{
 					Node<T> *A = newStack.pop();
 					Node<T> *B = newStack.pop();
-					result = postfix.processOperator(B->getData().getIntValue(), A->getData().getIntValue(), currentTerm.getStrValue()[0]);
-					root->setData(Term(std::to_string(result), currentTerm.getStrValue()[0]));
+					result = postfix.processOperator(B->getData().getIntValue(), A->getData().getIntValue(), currentTerm.getOperatorValue());
+					root->setData(Term(std::to_string(result), currentTerm.getOperatorValue()));
 					root->setLeft(B);
 					root->setRight(A);
 				}
