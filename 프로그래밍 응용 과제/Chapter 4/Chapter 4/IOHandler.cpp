@@ -41,8 +41,9 @@ int IOHandler::getFigureType()
 		std::cout << "2) 삼각형 추가" << '\n';
 		std::cout << "3) 사각형 추가" << '\n';
 		std::cin >> userInput;
-		if (CIRCLE - 10 <= userInput && userInput <= SQUARE - 10)
-			return userInput + 10;
+		userInput += 10;
+		if (CIRCLE <= userInput && userInput <= SQUARE)		//CIRCLE = 11, TRIANGLE = 12, SQUARE = 13
+			return userInput;
 		std::cout << "잘못된 입력입니다." << '\n';
 	}
 }

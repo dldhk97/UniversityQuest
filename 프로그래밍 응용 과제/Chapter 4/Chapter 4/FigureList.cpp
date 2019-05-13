@@ -55,6 +55,7 @@ void FigureList::deleteFigure(int index)
 {
 	delete dataArr[index];
 	dataArr[index] = dataArr[size - 1];
+	dataArr[size - 1] = nullptr;
 	size--;
 	if (size <= capacity / 4)
 		resize(capacity / 2);
