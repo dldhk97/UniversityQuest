@@ -1,66 +1,23 @@
-#include <iostream>
-#include <string>
-
-void print_arr(int **arr, int arr_size, int max_length)			//nxn 배열의 각 값을 출력합니다.
+int recursion_fibo(int input)									//재귀함수로 피보나치 수를 구합니다.
 {
-	std::cout << "------------------------------\n";
-	for (int i = 0; i < arr_size; i++)
-	{
-		for (int j = 0; j < arr_size; j++)
-		{
-			std::cout << arr[i][j];								//배열의 값 출력
-			for (int k = 0; k <= max_length - std::to_string(arr[i][j]).length(); k++)			//값의 길이에 알맞게 공백 출력
-			{
-				std::cout << " ";
-			}
-		}
-		std::cout << '\n';
-	}
-	std::cout << "------------------------------\n\n";
+	if (input == 0) return 0;
+	if (input == 1) return 1;
+	return recursion_fibo(input - 1) + recursion_fibo(input - 2);
 }
 
-void rotate_90_clockwise(int **arr, int arr_size)				//결과값을 저장할 배열 메모리 할당
+int repeat_fibo(int input)										//반복함수로 피보나치 수를 구합니다.
 {
-	int **result_arr = new int*[arr_size];						//결과값을 저장할 배열 메모리 할당
-	for (int i = 0; i < arr_size; i++)
-		result_arr[i] = new int[arr_size];
+	if (input == 1) return 0;									//첫번째 피보나치 수를 구하려고할 경우 0을 반환합니다.
+	if (input == 2) return 1;									//두번째 피보나치 수를 구하려고할 경우 1을 반환합니다.
 
-	for (int i = 0; i < arr_size; i++)							//90도 시계 회전시키는 메소드입니다.
+	int previous_num_1 = 0;										//Pn-2을 저장하는 변수입니다.
+	int previous_num_2 = 1;										//Pn-1을 저장하는 변수입니다.
+
+	for (int i = 0; i < input - 2; i++)							//첫번째와 두번째 피보나치 수를 구하려고하는 2가지 경우는 제외합니다.
 	{
-		for (int j = 0; j < arr_size; j++)
-		{														//이 부분의 코드가 잘 이해가 되지 않는다면, 초기 행렬의 1행의 요소를 마지막 열(3)로 옮긴다고 생각을 하면 됨.
-			result_arr[j][arr_size - i - 1] = arr[i][j];		//ex) (0,0)(0,1),(0,2),(0,3) 요소들을 (0,3),(1,3),(2,3),(3,3)로 옮김
-		}														//행렬을 회전시킬 때 주의해야 할 점은 기존 배열은 건드리지 않고, 회전된 배열을 따로 만들어주어야 함.
-	}
-
-	for (int i = 0; i < arr_size; i++)							//임시배열을 원본배열에 완전복사합니다.
-		for (int j = 0; j < arr_size; j++)
-			arr[i][j] = result_arr[i][j];
-
-	for (int i = 0; i < arr_size; i++)							//임시 배열 메모리 해제
-		delete[] result_arr[i];
-	delete[] result_arr;
-}
-
-void rotate_90_revese_clockwise(int **arr, int arr_size)		//행렬과 행렬크기를 받아 90도 반시계 회전시킵니다.
-{
-	int **result_arr = new int*[arr_size];						//결과값을 저장할 배열 메모리 할당
-	for (int i = 0; i < arr_size; i++)
-		result_arr[i] = new int[arr_size];
-
-	for (int i = 0; i < arr_size; i++)							//90도 반시계 회전시키는 메소드입니다.
-	{
-		for (int j = 0; j < arr_size; j++)
-		{														//이 부분은 초기행렬 1행의 요소를 첫번째 열(0)로 옮긴다고 생각하면 됩니다.
-			result_arr[arr_size - j - 1][i] = arr[i][j];		//ex) (0,0)(0,1),(0,2),(0,3) 요소들을 (3,0),(2,0),(1,0),(0,0)으로 이동합니다.
-		}														//마찬가지로 행렬을 회전시킬 때 주의해야 할 점은 기존 배열은 건드리지 않고, 회전된 배열을 따로 만들어주어야 합니다.
-	}
-
-	for (int i = 0; i < arr_size; i++)							//임시배열을 원본배열에 완전복사합니다.
-		for (int j = 0; j < arr_size; j++)
-			arr[i][j] = result_arr[i][j];
-
-	for (int i = 0; i < arr_size; i++)							//임시 배열 메모리 해제
-		delete[] result_arr[i];
-	delete[] result_arr;
+		int temp = previous_num_2;								//임시 변수에 Pn-1값을 저장해놓습니다.
+		previous_num_2 = previous_num_1 + previous_num_2;		//새로운 값을 Pn-1에 저장합니다. (이것은 다음에 사용할 Pn-1이며, 새로 구한 피보나치수이기도 합니다)
+		previous_num_1 = temp;									//새로운 Pn-2는 이전의 Pn-1값으로 저장합니다. (이것은 다음에 사용할 Pn-2입니다)
+	}															//즉, A, B, C ---> A(버려짐), B, C, D(새 피보나치수)
+	return previous_num_2;
 }
