@@ -4,28 +4,36 @@
 bool TaskManager::insertFigure(FigureList &figureList)
 {
 	IOHandler ioh;
-	
-	int figureType = ioh.getFigureType();
 
-	if (figureType == CIRCLE)
+	switch (ioh.getFigureType())
 	{
-		Circle* newCircle;
-		newCircle = ioh.getCircle();
-		figureList.insertFigure(newCircle);
+		case CIRCLE:
+		{
+			Circle* newCircle;
+			newCircle = ioh.getCircle();
+			figureList.insertFigure(newCircle);
+			return true;
+		}
+		case TRIANGLE:
+		{
+			Triangle* newTriangle;
+			newTriangle = ioh.getTriangle();
+			figureList.insertFigure(newTriangle);
+			return true;
+		}
+		case SQUARE:
+		{
+			Square* newSquare;
+			newSquare = ioh.getSquare();
+			figureList.insertFigure(newSquare);
+			return true;
+		}
+		default:
+		{
+			ioh.printMessage("도형 생성에 실패하였습니다.");
+			return false;
+		}
 	}
-	else if (figureType == TRIANGLE)
-	{
-		Triangle* newTriangle;
-		newTriangle = ioh.getTriangle();
-		figureList.insertFigure(newTriangle);
-	}
-	else if (figureType == SQUARE)
-	{
-		Square* newSquare;
-		newSquare = ioh.getSquare();
-		figureList.insertFigure(newSquare);
-	}
-	return true;
 }
 bool TaskManager::deleteFigure(FigureList &figureList)
 {
