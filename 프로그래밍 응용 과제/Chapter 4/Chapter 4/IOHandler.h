@@ -3,13 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include "FigureList.h"
-#include "Circle.h"
-#include "Triangle.h"
-#include "Square.h"
-
 
 enum Menu {INSERT = 1, DELETE, PRINT, EXIT};
-enum FigureType {CIRCLE = 11, TRIANGLE, SQUARE};
 
 class IOHandler
 {
@@ -22,8 +17,6 @@ public:
 	Circle *getCircle();
 	Triangle *getTriangle();
 	Square *getSquare();
-
-	
 
 	void printMessage(std::string message);
 	void printFigure(Figure *figure);

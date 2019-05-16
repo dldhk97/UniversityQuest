@@ -85,15 +85,41 @@ void FigureList::resize(int newCapacity)
 	capacity = newCapacity;
 }
 
+int FigureList::getFigureType(Figure* figure)
+{
+	if (typeid(*figure).name() == typeid(Circle).name())
+	{
+		return CIRCLE;
+	}
+	else if (typeid(*figure).name() == typeid(Triangle).name())
+	{
+		return TRIANGLE;
+	}
+	else if (typeid(*figure).name() == typeid(Square).name())
+	{
+		return SQUARE;
+	}
+	return NOT_FOUND;
+}
+
+bool FigureList::compare(Figure* a, Figure* b)
+{
+	if (getFigureType(a) > getFigureType(b))
+		return true;
+	if (a->getArea() > b->getArea())
+		return true;
+	return false;
+}
+
 void FigureList::insertionSort()
 {
 	int i, j;
 	Figure *temp;
 
-	for (i = 0; i < size; i++)
+	for (i = 1; i < size; i++)
 	{
 		j = i;
-		while (j > 0 && dataArr[j - 1]->getArea() > dataArr[j]->getArea())
+		while (j > 0 && compare(dataArr[j - 1], dataArr[j]))
 		{
 			temp = dataArr[j - 1];
 			dataArr[j - 1] = dataArr[j];
@@ -101,4 +127,5 @@ void FigureList::insertionSort()
 			j--;
 		}
 	}
+
 }

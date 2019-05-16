@@ -51,27 +51,8 @@ void TaskManager::printFigureList(FigureList &figureList)
 	int size = figureList.getSize();
 	for (int i = 0; i < size; i++)
 	{
-		if (typeid(*figureList.getFigure(i)).name() == typeid(Circle).name())
-		{
 			ioh.printFigure(figureList.getFigure(i));
 			ioh.printMessage("");
-		}
-	}
-	for (int i = 0; i < size; i++)
-	{
-		if (typeid(*figureList.getFigure(i)).name() == typeid(Triangle).name())
-		{
-			ioh.printFigure(figureList.getFigure(i));
-			ioh.printMessage("");
-		}
-	}
-	for (int i = 0; i < size; i++)
-	{
-		if (typeid(*figureList.getFigure(i)).name() == typeid(Square).name())
-		{
-			ioh.printFigure(figureList.getFigure(i));
-			ioh.printMessage("");
-		}
 	}
 }
 void TaskManager::insertionSort(FigureList &figureList)
