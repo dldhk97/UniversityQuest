@@ -161,9 +161,6 @@
     <ClInclude Include="TaskManager.h" />
     <ClInclude Include="Triangle.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\..\..\..\..\..\shape.dat" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
