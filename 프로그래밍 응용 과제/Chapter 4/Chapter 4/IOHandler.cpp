@@ -1,3 +1,4 @@
+//IOHandler.cpp
 #include "IOHandler.h"
 
 int IOHandler::getMenu()
@@ -48,10 +49,9 @@ int IOHandler::getFigureType()
 	}
 }
 
-Circle *IOHandler::getCircle()
+Circle* IOHandler::getCircle()
 {
-	double posX, posY;
-	double radius;
+	double posX, posY, radius;
 	std::cout << "중심 좌표 x 입력 :";
 	std::cin >> posX;
 	std::cout << "중심 좌표 y 입력 :";
@@ -59,11 +59,11 @@ Circle *IOHandler::getCircle()
 	std::cout << "반지름 입력 :";
 	std::cin >> radius;
 
-	Circle *newCircle = new Circle(radius, posX, posY);
+	Circle* newCircle = new Circle(radius, posX, posY);
 	return newCircle;
 }
 
-Triangle *IOHandler::getTriangle()
+Triangle* IOHandler::getTriangle()
 {
 	double width, height;
 	std::cout << "가로 길이 입력 :";
@@ -71,10 +71,10 @@ Triangle *IOHandler::getTriangle()
 	std::cout << "세로 길이 입력 :";
 	std::cin >> height;
 
-	Triangle *newTriangle = new Triangle(width, height);
+	Triangle* newTriangle = new Triangle(width, height, 0, 0);
 	return newTriangle;
 }
-Square *IOHandler::getSquare()
+Square* IOHandler::getSquare()
 {
 	double width, height;
 	std::cout << "가로 길이 입력 :";
@@ -82,7 +82,7 @@ Square *IOHandler::getSquare()
 	std::cout << "세로 길이 입력 :";
 	std::cin >> height;
 
-	Square *newSquare = new Square(width, height);
+	Square* newSquare = new Square(width, height, 0, 0);
 	return newSquare;
 }
 
@@ -90,7 +90,7 @@ void IOHandler::printMessage(std::string message)
 {
 	std::cout << message << "\n";
 }
-void IOHandler::printFigure(Figure *figure)
+void IOHandler::printFigure(Figure* figure)
 {
 	figure->print();
 }
@@ -114,7 +114,7 @@ bool IOHandler::loadFile(FigureList &figureList, std::string fileLocation)
 				case CIRCLE:
 				{
 					openFile >> id >> posX >> posY >> width;
-					Circle *newCircle = new Circle(width, posX, posY);
+					Circle* newCircle = new Circle(width, posX, posY);
 					newCircle->setId(id);
 					figureList.insertFigure(newCircle);
 					break;
@@ -122,7 +122,7 @@ bool IOHandler::loadFile(FigureList &figureList, std::string fileLocation)
 				case TRIANGLE:
 				{
 					openFile >> id >> posX >> posY >> width >> height;
-					Triangle *newTriangle = new Triangle(width, height, posX, posY);
+					Triangle* newTriangle = new Triangle(width, height, posX, posY);
 					newTriangle->setId(id);
 					figureList.insertFigure(newTriangle);
 					break;
@@ -130,7 +130,7 @@ bool IOHandler::loadFile(FigureList &figureList, std::string fileLocation)
 				case SQUARE:
 				{
 					openFile >> id >> posX >> posY >> width >> height;
-					Square *newSquare = new Square(width, height, posX, posY);
+					Square* newSquare = new Square(width, height, posX, posY);
 					newSquare->setId(id);
 					figureList.insertFigure(newSquare);
 					break;
@@ -147,7 +147,7 @@ bool IOHandler::loadFile(FigureList &figureList, std::string fileLocation)
 void IOHandler::saveFile(FigureList &figureList, std::string fileLocation)
 {
 	std::ofstream writeFile(fileLocation);
-	if (writeFile.is_open())				//파일이 열려있다면
+	if (writeFile.is_open())									//파일이 열려있다면
 	{
 		writeFile << figureList.getLastId() << "\n";			//마지막 id 저장
 		if (figureList.getSize() <= 0)
@@ -157,7 +157,7 @@ void IOHandler::saveFile(FigureList &figureList, std::string fileLocation)
 		}
 		for (int i = 0; i < figureList.getSize(); i++)
 		{
-			Figure *currentFigure = figureList.getFigure(i);
+			Figure* currentFigure = figureList.getFigure(i);
 			writeFile << currentFigure->to_string() << "\n";
 		}
 		writeFile.close();

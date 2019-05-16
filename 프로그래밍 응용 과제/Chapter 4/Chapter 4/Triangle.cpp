@@ -1,20 +1,7 @@
+//Triangle.cpp
 #include "Triangle.h"
 #include "IOHandler.h"
 
-Triangle::Triangle()
-{
-}
-Triangle::Triangle(double width, double height)
-{
-	this->id = NOT_FOUND;
-	this->posX = 0;
-	this->posY = 0;
-	this->width = width;
-	this->height = height;
-	this->area = width * height / 2;
-	this->hypotenuse = sqrt(width * width + height * height);
-	this->perimeter = width + height + this->hypotenuse;
-}
 Triangle::Triangle(double width, double height, double posX, double posY)
 {
 	this->id = NOT_FOUND;
@@ -26,12 +13,6 @@ Triangle::Triangle(double width, double height, double posX, double posY)
 	this->hypotenuse = sqrt(width * width + height * height);
 	this->perimeter = width + height + this->hypotenuse;
 }
-
-
-Triangle::~Triangle()
-{
-}
-
 void Triangle::print()
 {
 	IOHandler ioh;
@@ -46,7 +27,6 @@ void Triangle::print()
 	ioh.printMessage("²ÀÁþÁ¡ 2 :(" + std::to_string(posX) + ", " + std::to_string(posY + height) + ")");
 	ioh.printMessage("²ÀÁþÁ¡ 3 :(" + std::to_string(posX + width) + ", " + std::to_string(posY) + ")");
 }
-
 std::string Triangle::to_string()
 {
 	return std::to_string(TRIANGLE) + ' ' + std::to_string(id) + ' ' + std::to_string(posX) + ' ' + std::to_string(posY) + ' ' + std::to_string(width) + ' ' + std::to_string(height);

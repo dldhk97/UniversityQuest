@@ -1,3 +1,4 @@
+//TaskManager.cpp
 #include "TaskManager.h"
 
 bool TaskManager::insertFigure(FigureList &figureList)
@@ -8,19 +9,19 @@ bool TaskManager::insertFigure(FigureList &figureList)
 
 	if (figureType == CIRCLE)
 	{
-		Circle *newCircle;
+		Circle* newCircle;
 		newCircle = ioh.getCircle();
 		figureList.insertFigure(newCircle);
 	}
 	else if (figureType == TRIANGLE)
 	{
-		Triangle *newTriangle;
+		Triangle* newTriangle;
 		newTriangle = ioh.getTriangle();
 		figureList.insertFigure(newTriangle);
 	}
 	else if (figureType == SQUARE)
 	{
-		Square *newSquare;
+		Square* newSquare;
 		newSquare = ioh.getSquare();
 		figureList.insertFigure(newSquare);
 	}

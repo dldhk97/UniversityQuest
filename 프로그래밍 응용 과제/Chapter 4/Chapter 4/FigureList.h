@@ -1,3 +1,4 @@
+//FigureList.h
 #pragma once
 
 #include <iostream>
@@ -5,8 +6,6 @@
 #include "Circle.h"
 #include "Triangle.h"
 #include "Square.h"
-
-enum FigureType { CIRCLE = 11, TRIANGLE, SQUARE };
 
 const int DEFAULT_CAPACITY = 10;
 const int NOT_FOUND = -1;
@@ -20,6 +19,8 @@ private:
 	int lastId;
 
 	void resize(int newCapacity);
+	int getFigureType(Figure* figure);
+	bool compare(Figure* a, Figure* b);
 public:
 	FigureList();
 	~FigureList();
@@ -36,8 +37,6 @@ public:
 
 	int findFigure(int id);
 	
-	int getFigureType(Figure* figure);
-	bool compare(Figure* a, Figure* b);
 	void insertionSort();
 };
 

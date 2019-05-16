@@ -1,7 +1,7 @@
+//main.cpp
 #include "TaskManager.h"
 
 const std::string FILE_LOCATION = "C:\\shape.dat";
-
 int main()
 {
 	TaskManager tskMgr;

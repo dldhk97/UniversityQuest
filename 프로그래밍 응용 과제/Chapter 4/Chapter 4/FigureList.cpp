@@ -1,3 +1,4 @@
+//FigureList.cpp
 #include "FigureList.h"
 
 FigureList::FigureList()
@@ -20,7 +21,7 @@ FigureList::~FigureList()
 	}
 }
 
-Figure *FigureList::getFigure(int index)
+Figure* FigureList::getFigure(int index)
 {
 	return dataArr[index];
 }
@@ -32,7 +33,6 @@ int FigureList::getCapacity()
 {
 	return capacity;
 }
-
 int FigureList::getLastId()
 {
 	return lastId;	
@@ -43,7 +43,7 @@ void FigureList::setLastId(int lastId)
 	this->lastId = lastId;
 }
 
-void FigureList::insertFigure(Figure *newFigure)
+void FigureList::insertFigure(Figure* newFigure)
 {
 	if (size >= capacity)
 		resize(capacity * 2);
@@ -69,16 +69,15 @@ int FigureList::findFigure(int id)
 	return NOT_FOUND;
 }
 
-//Utility
 void FigureList::resize(int newCapacity)
 {
 	if (newCapacity < DEFAULT_CAPACITY)
 		return;
-	Figure **tempArr = new Figure*[size];
+	Figure** tempArr = new Figure*[size];
 	for (int i = 0; i < size; i++)
 		tempArr[i] = dataArr[i];
 	delete[] dataArr;
-	dataArr = new Figure *[newCapacity];
+	dataArr = new Figure* [newCapacity];
 	for (int i = 0; i < size; i++)
 		dataArr[i] = tempArr[i];
 	delete[] tempArr;
@@ -101,20 +100,19 @@ int FigureList::getFigureType(Figure* figure)
 	}
 	return NOT_FOUND;
 }
-
 bool FigureList::compare(Figure* a, Figure* b)
 {
 	if (getFigureType(a) > getFigureType(b))
 		return true;
-	if (a->getArea() > b->getArea())
-		return true;
+	else if (getFigureType(a) == getFigureType(b))
+		if (a->getArea() > b->getArea())
+			return true;
 	return false;
 }
-
 void FigureList::insertionSort()
 {
 	int i, j;
-	Figure *temp;
+	Figure* temp;
 
 	for (i = 1; i < size; i++)
 	{
@@ -127,5 +125,4 @@ void FigureList::insertionSort()
 			j--;
 		}
 	}
-
 }
