@@ -15,66 +15,66 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="TaskManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Student.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Professor.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Book.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="User.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Magazine.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="TextBook.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="LoanInfo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="IOHandler.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="LoanInfo.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Magazine.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Professor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Student.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TextBook.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="User.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TaskManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Student.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Professor.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Book.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="User.h">
+    <ClInclude Include="IOHandler.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="List.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="LoanInfo.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="Magazine.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Professor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Student.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="TextBook.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="LoanInfo.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="IOHandler.h">
+    <ClInclude Include="User.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
