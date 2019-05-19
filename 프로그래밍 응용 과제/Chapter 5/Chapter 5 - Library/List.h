@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Pair.h"
+#include "Book.h"
 
 const int DEFAULT_CAPACITY = 10;
 const int NOT_FOUND = -1;
-const int DATATYPE_CAPACITY = 2;
+const int DEFAULT_DATATYPE_CAPACITY = 2;			//이 리스트가 서로 다른 데이터타입을 몇개까지 가질 수 있는지
 
 template <typename dataType>
 class List
@@ -16,9 +17,9 @@ private:
 	bool isChanged;
 
 	//LastId
-	int dataTypeCnt;
-	Pair<std::string, int> *lastIdArr;
-	int getDataTypeIndex(std::string typeName);
+	int dataTypeSize;								//리스트에 저장된 데이터타입의 개수
+	Pair<std::string, int> *lastIdArr;				//first에 데이터타입의 이름, second에 lastId를 저장
+	int findDataTypeIndex(std::string typeName);	//이미 저장된 적이 있는 데이터타입인지 찾고 인덱스 반환
 
 	//Memory
 	void resize(int newCapacity);
@@ -34,11 +35,13 @@ public:
 	//Getter
 	dataType* getData(int index);
 	int getSize();
-	int getLastId(std::string typeName);
+	int getLastId(std::string typeName);			//이미 저장된 적이 있는 데이터타입이면, lastID + 1을 반환
 
 	//Utlity
-	int findData(std::string id);
+	int findDataById(std::string id);
+	int findDataByLoanerId(std::string id);
 	void insertionSort();
+	void insertionSort(List<dataType>& bookList);
 };
 //Initializer
 template<typename dataType> 
@@ -48,8 +51,8 @@ List<dataType>::List()
 	size = 0;
 	isChanged = false;
 	dataArr = new dataType* [capacity];
-	lastIdArr = new Pair<std::string, int>[DATATYPE_CAPACITY];
-	dataTypeCnt = 0;
+	lastIdArr = new Pair<std::string, int>[DEFAULT_DATATYPE_CAPACITY];
+	dataTypeSize = 0;
 }
 template<typename dataType> 
 List<dataType>::~List()
@@ -81,10 +84,11 @@ void List<dataType>::resize(int newCapacity)
 	capacity = newCapacity;
 }
 //LastID
+//이미 저장된 적이 있는 데이터타입인지 찾고 인덱스 반환
 template<typename dataType>
-int List<dataType>::getDataTypeIndex(std::string typeName)
+int List<dataType>::findDataTypeIndex(std::string typeName)
 {
-	for (int i = 0; i < dataTypeCnt; i++)
+	for (int i = 0; i < dataTypeSize; i++)
 	{
 		if (lastIdArr[i].getFirst() == typeName)
 			return i;
@@ -120,28 +124,39 @@ int List<dataType>::getSize()
 {
 	return size;
 }
+//이미 저장된 적이 있는 데이터타입이면, lastID + 1을 갱신 후 반환
 template<typename dataType>
 int List<dataType>::getLastId(std::string typeName)
 {
-	int dataTypeIndex = getDataTypeIndex(typeName);
+	int dataTypeIndex = findDataTypeIndex(typeName);
 	if (dataTypeIndex == NOT_FOUND)
 	{
-		lastIdArr[dataTypeCnt].setFirst(typeName);
-		lastIdArr[dataTypeCnt].setSecond(1);
-		return lastIdArr[dataTypeCnt++].getSecond();
+		lastIdArr[dataTypeSize].setFirst(typeName);
+		lastIdArr[dataTypeSize].setSecond(1);
+		return lastIdArr[dataTypeSize++].getSecond();
 	}
 	else
 	{
-		lastIdArr[dataTypeIndex].setSecond(lastIdArr[dataTypeIndex].getSecond() + 1);
+		int newLastId = lastIdArr[dataTypeIndex].getSecond() + 1;
+		lastIdArr[dataTypeIndex].setSecond(newLastId);
 		return lastIdArr[dataTypeIndex].getSecond();
 	}
 }
 //Utility
 template<typename dataType> 
-int List<dataType>::findData(std::string id)
+int List<dataType>::findDataById(std::string id)
 {
 	for (int index = 0; index < size; index++)
 		if (dataArr[index]->getId() == id)
+			return index;
+	return NOT_FOUND;
+}
+//LoanInfo만을 위한 메소드 : 대출자의 id로 도서를 찾아 반환
+template<typename dataType>
+int List<dataType>::findDataByLoanerId(std::string id)
+{
+	for (int index = 0; index < size; index++)
+		if (dataArr[index]->getLoanerId() == id)
 			return index;
 	return NOT_FOUND;
 }
@@ -154,7 +169,28 @@ void List<dataType>::insertionSort()
 	for (i = 1; i < size; i++)
 	{
 		j = i;
-		while (j > 0 && dataArr[j - 1]->getId() > dataArr[j]->getId())
+		while (j > 0 && dataArr[j-1]->compare(dataArr[j]))
+		{
+			temp = dataArr[j - 1];
+			dataArr[j - 1] = dataArr[j];
+			dataArr[j] = temp;
+			j--;
+		}
+	}
+}
+template<typename dataType>
+void List<dataType>::insertionSort(List<dataType>& bookList)
+{
+	int i, j;
+	dataType* temp;
+
+	for (i = 1; i < size; i++)
+	{
+		j = i;
+		
+		Book currentBook = bookList.getData(bookList.findDataById(dataArr[j]->getId()));
+		Book targetBook = bookList.getData(bookList.findDataById(dataArr[j - 1]->getId()));
+		while (j > 0 && dataArr[j - 1]->compare(currentBook, targetBook, dataArr[j]))
 		{
 			temp = dataArr[j - 1];
 			dataArr[j - 1] = dataArr[j];

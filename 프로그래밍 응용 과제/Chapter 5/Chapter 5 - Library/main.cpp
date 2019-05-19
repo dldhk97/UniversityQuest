@@ -4,6 +4,8 @@
 
 using namespace std;
 
+//메모리 해제하는거 기억해라
+
 int main()
 {
 	TaskManager tskMgr;
@@ -22,13 +24,13 @@ int main()
 		switch (userInput)
 		{
 		case USERMENU:
-			tskMgr.manageUser(userList);
+			tskMgr.manageUser(userList, bookList, loanInfoList);
 			break;
 		case BOOKMENU:
-			tskMgr.manageBook(bookList);
+			tskMgr.manageBook(userList, bookList, loanInfoList);
 			break;
 		case LOANMENU:
-			tskMgr.manageLoan(loanInfoList);
+			tskMgr.manageLoan(userList, bookList, loanInfoList);
 			break;
 		}
 	}

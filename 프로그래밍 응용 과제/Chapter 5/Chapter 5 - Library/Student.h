@@ -7,10 +7,9 @@ class IOHandler;
 class Student : public User
 {
 private:
-	int year;
-	std::string grade, contact;
+	std::string grade, contact, year;
 public:
-	Student(std::string id, std::string name, std::string department, int userState, int year, std::string grade, std::string contact);
+	Student(std::string id, std::string name, std::string department, int userState, std::string year, std::string grade, std::string contact);
 
 	virtual void display();
 };

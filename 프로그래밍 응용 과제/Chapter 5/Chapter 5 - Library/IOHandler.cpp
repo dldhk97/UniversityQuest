@@ -49,7 +49,11 @@ int IOHandler::getMenu(int menuType)
 		std::cout << "4) " << option4 << "\n";
 		std::cout << "====================================================" << '\n';
 		std::cin >> userInput;
-
+		if (std::cin.fail())
+		{
+			std::cin.clear();
+			std::cin.ignore(10 ,'\n');
+		}
 		if (USERMENU <= userInput && userInput <= EXIT)
 			return userInput;
 		std::cout << "잘못된 입력입니다." << '\n';
@@ -61,11 +65,16 @@ int IOHandler::getUserType()
 	int userInput;
 	while (1)
 	{
-		std::cout << "1) 학생 추가" << '\n';
-		std::cout << "2) 교수 추가" << '\n';
+		std::cout << "1) 교수 추가" << '\n';
+		std::cout << "2) 학생 추가" << '\n';
 		std::cin >> userInput;
+		if (std::cin.fail())
+		{
+			std::cin.clear();
+			std::cin.ignore(10, '\n');
+		}
 		userInput += 10;
-		if (STUDENT <= userInput && userInput <= PROFESSOR)		//STUDENT = 11, PROFESSOR = 12
+		if (PROFESSOR <= userInput && userInput <= STUDENT)		//PROFESSOR = 11, STUDENT = 12
 			return userInput;
 		std::cout << "잘못된 입력입니다." << '\n';
 	}
@@ -78,6 +87,11 @@ int IOHandler::getBookType()
 		std::cout << "1) 잡지 추가" << '\n';
 		std::cout << "2) 전공책 추가" << '\n';
 		std::cin >> userInput;
+		if (std::cin.fail())
+		{
+			std::cin.clear();
+			std::cin.ignore(10, '\n');
+		}
 		userInput += 20;
 		if (MAGAZINE <= userInput && userInput <= TEXTBOOK)		//MAGAZINE = 21, TEXTBOOK = 22
 			return userInput;
@@ -87,8 +101,7 @@ int IOHandler::getBookType()
 
 Student* IOHandler::getStudent()
 {
-	std::string name, department, grade, contact;
-	int year;
+	std::string name, department, year, grade, contact;
 	std::cout << "성명 :";
 	std::cin >> name;
 	std::cout << "학과 :";
@@ -103,7 +116,6 @@ Student* IOHandler::getStudent()
 	Student* newStudent = new Student("NOT_FOUND", name, department, VALID, year, grade, contact);
 	return newStudent;
 }
-
 Professor* IOHandler::getProfessor()
 {
 	std::string name, department, major, laboratory;
@@ -118,6 +130,36 @@ Professor* IOHandler::getProfessor()
 
 	Professor* newProfessor = new Professor("NOT_FOUND", name, department, VALID, major, laboratory);
 	return newProfessor;
+}
+Magazine* IOHandler::getMagazine()
+{
+	std::string title, publisher, publicationDate, volume;
+	std::cout << "도서명 :";
+	std::cin >> title;
+	std::cout << "출판사 :";
+	std::cin >> publisher;
+	std::cout << "출판년도 :";
+	std::cin >> publicationDate;
+	std::cout << "권/호 :";
+	std::cin >> volume;
+
+	Magazine* newMagazine = new Magazine("NOT_FOUND", title, publisher, publicationDate, LOANABLE, volume);
+	return newMagazine;
+}
+TextBook* IOHandler::getTextBook()
+{
+	std::string title, publisher, publicationDate, detailedSubject;
+	std::cout << "도서명 :";
+	std::cin >> title;
+	std::cout << "출판사 :";
+	std::cin >> publisher;
+	std::cout << "출판년도 :";
+	std::cin >> publicationDate;
+	std::cout << "세부 주제 :";
+	std::cin >> detailedSubject;
+
+	TextBook* newTextBook = new TextBook("NOT_FOUND", title, publisher, publicationDate, LOANABLE, detailedSubject);
+	return newTextBook;
 }
 
 int IOHandler::getInt(std::string message)
@@ -139,7 +181,20 @@ void IOHandler::displayMessage(std::string message)
 {
 	std::cout << message << '\n';
 }
+void IOHandler::displayMessageAsCell(std::string message, int maxLength)
+{
+	std::string newMessage = message.length() > maxLength ? message.substr(0, maxLength - 2) + ".." : message;
+	std::cout << newMessage << '\t';
+}
 void IOHandler::displayUser(User* user)
 {
 	user->display();
+}
+void IOHandler::displayBook(Book* book)
+{
+	book->display();
+}
+void IOHandler::displayLoanInfo(User* user, Book* book, LoanInfo* loanInfo)
+{
+	loanInfo->display(user, book);
 }
