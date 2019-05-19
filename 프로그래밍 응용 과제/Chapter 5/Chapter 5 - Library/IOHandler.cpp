@@ -183,7 +183,18 @@ void IOHandler::displayMessage(std::string message)
 }
 void IOHandler::displayMessageAsCell(std::string message, int maxLength)
 {
-	std::string newMessage = message.length() > maxLength ? message.substr(0, maxLength - 2) + ".." : message;
+	std::string newMessage;
+	if (message.length() > maxLength)
+	{
+		int shrinkedLength = maxLength - 2;
+		newMessage = message.substr(0, shrinkedLength) + "..";
+	}
+	else
+	{
+		newMessage = message;
+		for (int i = message.length(); i <= maxLength; i++)
+			newMessage += " ";
+	}
 	std::cout << newMessage << '\t';
 }
 void IOHandler::displayUser(User* user)

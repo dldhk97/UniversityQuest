@@ -21,7 +21,7 @@ void Magazine::display()
 		bookStateStr = "대출 가능";
 		break;
 	case LOANING:
-		bookStateStr = "대출 중 ";
+		bookStateStr = "대출 중";
 		break;
 	case INLOANBLE:
 		bookStateStr = "대출 불가";
