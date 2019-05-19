@@ -160,6 +160,7 @@
     <ClInclude Include="List.h" />
     <ClInclude Include="LoanInfo.h" />
     <ClInclude Include="Magazine.h" />
+    <ClInclude Include="Pair.h" />
     <ClInclude Include="Professor.h" />
     <ClInclude Include="Student.h" />
     <ClInclude Include="TaskManager.h" />

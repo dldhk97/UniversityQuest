@@ -82,7 +82,7 @@ void TaskManager::insertUser(List<User>& userList)
 		newStudent = ioh.getStudent();
 		if (newStudent->getId() == "NOT_FOUND")
 		{
-			int newId = userList.increaseAndGetLastId();
+			int newId = userList.getLastId(typeid(*newStudent).name());
 			std::string newIdStr = "F";
 			if (newId < 10)
 				newIdStr = newIdStr + "0" + std::to_string(newId);
@@ -99,7 +99,7 @@ void TaskManager::insertUser(List<User>& userList)
 		newProfessor = ioh.getProfessor();
 		if (newProfessor->getId() == "NOT_FOUND")
 		{
-			int newId = userList.increaseAndGetLastId();
+			int newId = userList.getLastId(typeid(*newProfessor).name());
 			std::string newIdStr = "U";
 			if (newId < 10)
 				newIdStr = newIdStr + "0" + std::to_string(newId);
