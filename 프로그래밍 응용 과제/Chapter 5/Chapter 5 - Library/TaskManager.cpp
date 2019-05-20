@@ -1,21 +1,22 @@
 #include "TaskManager.h"
 
-void TaskManager::manageUser(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList)
+void TaskManager::manageUser(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
 	IOHandler ioh;
 	int userInput;
 	while (1)
 	{
-		userInput = ioh.getMenu(USERMENU);
+		userInput = ioh.getMenu(USER);
 		if (userInput == EXIT)
 			break;
 		switch (userInput)
 		{
 		case INSERTUSER:
 			insertUser(userList);
+			isDataChanged = true;
 			break;
 		case CHANGESTATE:
-			changeUserState(userList, bookList, loanInfoList);
+			changeUserState(userList, bookList, loanInfoList, isDataChanged);
 			break;
 		case DISPLAYUSERS:
 			userList.insertionSort();
@@ -24,22 +25,23 @@ void TaskManager::manageUser(List<User>& userList, List<Book>& bookList, List<Lo
 		}
 	}
 }
-void TaskManager::manageBook(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList)
+void TaskManager::manageBook(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
 	IOHandler ioh;
 	int userInput;
 	while (1)
 	{
-		userInput = ioh.getMenu(BOOKMENU);
+		userInput = ioh.getMenu(BOOK);
 		if (userInput == EXIT)
 			break;
 		switch (userInput)
 		{
 		case INSERTBOOK:
 			insertBook(bookList);
+			isDataChanged = true;
 			break;
 		case CHANGESTATE:
-			changeBookState(userList, bookList, loanInfoList);
+			changeBookState(userList, bookList, loanInfoList, isDataChanged);
 			break;
 		case DISPLAYBOOKS:
 			bookList.insertionSort();
@@ -48,22 +50,23 @@ void TaskManager::manageBook(List<User>& userList, List<Book>& bookList, List<Lo
 		}
 	}
 }
-void TaskManager::manageLoan(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList)
+void TaskManager::manageLoan(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
 	IOHandler ioh;
 	int userInput;
 	while (1)
 	{
-		userInput = ioh.getMenu(LOANMENU);
+		userInput = ioh.getMenu(LOAN);
 		if (userInput == EXIT)
 			break;
 		switch (userInput)
 		{
 		case LOANBOOK:
-			loanBook(userList, bookList, loanInfoList);
+			loanBook(userList, bookList, loanInfoList, isDataChanged);
 			break;
 		case RETURNBOOK:
 			returnBook(bookList, loanInfoList);
+			isDataChanged = true;
 			break;
 		case DISPLAYHISTORY:
 			displayLoanHistory(userList, bookList, loanInfoList);
@@ -114,7 +117,7 @@ void TaskManager::insertUser(List<User>& userList)
 	}
 	}
 }
-void TaskManager::changeUserState(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList)
+void TaskManager::changeUserState(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
 	IOHandler ioh;
 	if (userList.getSize() <= 0)
@@ -146,6 +149,7 @@ void TaskManager::changeUserState(List<User>& userList, List<Book>& bookList, Li
 	{
 		currentUser->setUserState(INVALID);
 		ioh.displayMessage("변경되었습니다.");
+		isDataChanged = true;
 	}
 	else
 	{
@@ -209,7 +213,7 @@ void TaskManager::insertBook(List<Book>& bookList)
 	}
 	}
 }
-void TaskManager::changeBookState(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList)
+void TaskManager::changeBookState(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
 	IOHandler ioh;
 	if (bookList.getSize() <= 0)
@@ -229,6 +233,7 @@ void TaskManager::changeBookState(List<User>& userList, List<Book>& bookList, Li
 	{
 		currentBook->setBookState(INLOANBLE);
 		ioh.displayMessage("변경되었습니다.");
+		isDataChanged = true;
 	}
 	else if (currentBook->getBookState() == LOANING)
 	{
@@ -252,7 +257,7 @@ void TaskManager::displayBookList(List<Book>& bookList)
 {
 	IOHandler ioh;
 	ioh.displayMessage("==================================================");
-	ioh.displayMessage("ID \t도서명 \t출판사 \t출판년도 \t상태 \t\t권/호 \t세부주제");
+	ioh.displayMessage("ID \t도서명 \t출판사 \t출판년도 \t\t상태 \t\t권/호 \t세부주제");
 	ioh.displayMessage("--------------------------------------------------");
 	int size = bookList.getSize();
 	for (int i = 0; i < size; i++)
@@ -262,7 +267,7 @@ void TaskManager::displayBookList(List<Book>& bookList)
 	ioh.displayMessage("==================================================");
 }
 
-void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList)
+void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
 	IOHandler ioh;
 	if (userList.getSize() <= 0 || bookList.getSize() <= 0)
@@ -293,8 +298,8 @@ void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<Loan
 		ioh.displayMessage(targetBook->getTitle() + "은(는) 대출불가 도서입니다.");
 		return;
 	}
-	std::string loanedDate = ioh.getString("대출일 :");
-	LoanInfo* newLoanInfo = new LoanInfo("NOT_FOUND", loaner->getId(), targetBook->getId(), loanedDate, "NOT_FOUND", "NOT_FOUND");
+	Date* loanedDate = ioh.getDate("대출일 :");
+	LoanInfo* newLoanInfo = new LoanInfo("NOT_FOUND", loaner->getId(), targetBook->getId(), loanedDate, nullptr, NOT_FOUND);
 	if (newLoanInfo->getId() == "NOT_FOUND")
 	{
 		int newSerial = loanInfoList.getLastId(typeid(LoanInfo).name());
@@ -303,7 +308,7 @@ void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<Loan
 	loanInfoList.insertData(newLoanInfo);
 	targetBook->setBookState(LOANING);
 	ioh.displayMessage(targetBook->getTitle() + "이(가) " + loaner->getName() + "에게 대출되었습니다.");
-
+	isDataChanged = true;
 }
 void TaskManager::returnBook(List<Book>& bookList, List<LoanInfo>& loanInfoList)
 {
@@ -311,10 +316,13 @@ void TaskManager::returnBook(List<Book>& bookList, List<LoanInfo>& loanInfoList)
 	Book* targetBook = ioh.findDataById("도서 ID :", bookList);
 	if (targetBook == nullptr)
 		return;
-	std::string returnDate = ioh.getString("반납일 :");
+	Date* returnDate = ioh.getDate("반납일 :");
 	LoanInfo* targetLoanInfo = loanInfoList.getData(loanInfoList.findDataById(targetBook->getId()));
 	targetLoanInfo->setReturnDate(returnDate);
-	targetLoanInfo->setPeriod("기간은 계산해야된다");				//debug!!!!!!!!!!! 기간 계산!?
+
+	int endDays = returnDate->totalDays();
+	int startDays = targetLoanInfo->getLoanedDate()->totalDays();
+	targetLoanInfo->setPeriod(endDays - startDays);
 	targetBook->setBookState(LOANABLE);
 	ioh.displayMessage(targetBook->getTitle() + "이(가) 반납되었습니다.");
 }

@@ -22,3 +22,8 @@ void Professor::display()
 	ioh.displayMessageAsCell(major, 6);
 	ioh.displayMessage(laboratory);
 }
+
+std::string Professor::to_string()
+{
+	return std::to_string(PROFESSOR)+ " " + id + " " + name + " " + department + " " + std::to_string(userState) + " " + major + " " + laboratory;
+}

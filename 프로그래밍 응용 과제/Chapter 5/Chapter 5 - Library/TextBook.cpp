@@ -1,7 +1,7 @@
 #include "TextBook.h"
 #include "IOHandler.h"
 
-TextBook::TextBook(std::string id, std::string title, std::string publisher, std::string publicationDate, int bookState, std::string detailedSubject)
+TextBook::TextBook(std::string id, std::string title, std::string publisher, Date* publicationDate, int bookState, std::string detailedSubject)
 {
 	this->id = id;
 	this->title = title;
@@ -30,10 +30,15 @@ void TextBook::display()
 	ioh.displayMessageAsCell(id, 6);
 	ioh.displayMessageAsCell(title, 6);
 	ioh.displayMessageAsCell(publisher, 6);
-	ioh.displayMessageAsCell(publicationDate, 6);
+	ioh.displayMessageAsCell(publicationDate->to_string(), 11);
 	ioh.displayMessageAsCell("", 6);
 	ioh.displayMessageAsCell(bookStateStr, 9);
 	ioh.displayMessageAsCell("", 6);
 	ioh.displayMessageAsCell(detailedSubject, 6);
 	ioh.displayMessage("");
+}
+
+std::string TextBook::to_string()
+{
+	return std::to_string(TEXTBOOK) + " " + id + " " + title + " " + publisher + " " + publicationDate->to_string() + " " + std::to_string(bookState) + " " + detailedSubject;
 }

@@ -30,5 +30,8 @@ public:
 
 	//Compare
 	bool compare(User* user);
+
+	//Write
+	virtual std::string to_string();
 };
 

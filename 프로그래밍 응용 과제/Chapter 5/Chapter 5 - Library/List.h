@@ -17,9 +17,9 @@ private:
 	bool isChanged;
 
 	//LastId
-	int dataTypeSize;								//리스트에 저장된 데이터타입의 개수
-	Pair<std::string, int> *lastIdArr;				//first에 데이터타입의 이름, second에 lastId를 저장
-	int findDataTypeIndex(std::string typeName);	//이미 저장된 적이 있는 데이터타입인지 찾고 인덱스 반환
+	int lastIdCnt;										//리스트에 저장된 데이터타입의 개수
+	Pair<std::string, int>* lastIdArr;					//first에 데이터타입의 이름, second에 lastId를 저장
+	int findLastIdIndexByType(std::string typeName);	//이미 저장된 적이 있는 데이터타입인지 찾고 인덱스 반환
 
 	//Memory
 	void resize(int newCapacity);
@@ -35,7 +35,13 @@ public:
 	//Getter
 	dataType* getData(int index);
 	int getSize();
+	
 	int getLastId(std::string typeName);			//이미 저장된 적이 있는 데이터타입이면, lastID + 1을 반환
+	int getlastIdCnt();
+	Pair<std::string, int> getLastIdInfo(int index);
+
+	//Setter
+	void AddNewLastId(std::string typeName, int lastId);	//새 lastId 추가
 
 	//Utlity
 	int findDataById(std::string id);
@@ -52,7 +58,7 @@ List<dataType>::List()
 	isChanged = false;
 	dataArr = new dataType* [capacity];
 	lastIdArr = new Pair<std::string, int>[DEFAULT_DATATYPE_CAPACITY];
-	dataTypeSize = 0;
+	lastIdCnt = 0;
 }
 template<typename dataType> 
 List<dataType>::~List()
@@ -86,9 +92,9 @@ void List<dataType>::resize(int newCapacity)
 //LastID
 //이미 저장된 적이 있는 데이터타입인지 찾고 인덱스 반환
 template<typename dataType>
-int List<dataType>::findDataTypeIndex(std::string typeName)
+int List<dataType>::findLastIdIndexByType(std::string typeName)
 {
-	for (int i = 0; i < dataTypeSize; i++)
+	for (int i = 0; i < lastIdCnt; i++)
 	{
 		if (lastIdArr[i].getFirst() == typeName)
 			return i;
@@ -128,19 +134,36 @@ int List<dataType>::getSize()
 template<typename dataType>
 int List<dataType>::getLastId(std::string typeName)
 {
-	int dataTypeIndex = findDataTypeIndex(typeName);
-	if (dataTypeIndex == NOT_FOUND)
+	int lastIdIndex = findLastIdIndexByType(typeName);
+	if (lastIdIndex == NOT_FOUND)
 	{
-		lastIdArr[dataTypeSize].setFirst(typeName);
-		lastIdArr[dataTypeSize].setSecond(1);
-		return lastIdArr[dataTypeSize++].getSecond();
+		lastIdArr[lastIdCnt].setFirst(typeName);
+		lastIdArr[lastIdCnt].setSecond(1);
+		return lastIdArr[lastIdCnt++].getSecond();
 	}
 	else
 	{
-		int newLastId = lastIdArr[dataTypeIndex].getSecond() + 1;
-		lastIdArr[dataTypeIndex].setSecond(newLastId);
-		return lastIdArr[dataTypeIndex].getSecond();
+		int newLastId = lastIdArr[lastIdIndex].getSecond() + 1;
+		lastIdArr[lastIdIndex].setSecond(newLastId);
+		return lastIdArr[lastIdIndex].getSecond();
 	}
+}
+template<typename dataType>
+int List<dataType>::getlastIdCnt()
+{
+	return lastIdCnt;
+}
+template<typename dataType>
+Pair<std::string, int> List<dataType>::getLastIdInfo(int index)
+{
+	return lastIdArr[index];
+}
+//Setter
+template<typename dataType>
+void List<dataType>::AddNewLastId(std::string typeName, int lastId)
+{
+	lastIdArr[lastIdCnt].setFirst(typeName);
+	lastIdArr[lastIdCnt++].setSecond(lastId);
 }
 //Utility
 template<typename dataType> 

@@ -1,7 +1,7 @@
 #include "Magazine.h"
 #include "IOHandler.h"
 
-Magazine::Magazine(std::string id, std::string title, std::string publisher, std::string publicationDate, int bookState, std::string volume)
+Magazine::Magazine(std::string id, std::string title, std::string publisher, Date* publicationDate, int bookState, std::string volume)
 {
 	this->id = id;
 	this->title = title;
@@ -30,9 +30,14 @@ void Magazine::display()
 	ioh.displayMessageAsCell(id, 6);
 	ioh.displayMessageAsCell(title, 6);
 	ioh.displayMessageAsCell(publisher, 6);
-	ioh.displayMessageAsCell(publicationDate, 6);
+	ioh.displayMessageAsCell(publicationDate->to_string(), 11);
 	ioh.displayMessageAsCell("", 6);
 	ioh.displayMessageAsCell(bookStateStr, 9);
 	ioh.displayMessageAsCell(volume, 6);
 	ioh.displayMessage("");
+}
+//Write
+std::string Magazine::to_string()
+{
+	return std::to_string(MAGAZINE) + " " + id + " " + title + " " + publisher + " " + publicationDate->to_string() + " " + std::to_string(bookState) + " " + volume;
 }

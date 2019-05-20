@@ -11,7 +11,7 @@ LoanInfo::LoanInfo(LoanInfo* loanInfo)
 	this->period = loanInfo->period;
 }
 
-LoanInfo::LoanInfo(std::string serial, std::string loanerId, std::string bookId, std::string loanedDate, std::string returnDate, std::string period)
+LoanInfo::LoanInfo(std::string serial, std::string loanerId, std::string bookId, Date* loanedDate, Date* returnDate, int period)
 {
 	this->serial = serial;
 	this->loanerId = loanerId;
@@ -29,24 +29,29 @@ std::string LoanInfo::getSerial()
 {
 	return this->serial;
 }
-std::string LoanInfo::getReturnDate()
+Date* LoanInfo::getLoanedDate()
 {
-	return returnDate;
+	return this->loanedDate;
+}
+Date* LoanInfo::getReturnDate()
+{
+	return this->returnDate;
 }
 std::string LoanInfo::getLoanerId()
 {
-	return loanerId;
+	return this->loanerId;
 }
 
 void LoanInfo::setSerial(std::string serial)
 {
 	this->serial = serial;
 }
-void LoanInfo::setReturnDate(std::string returnDate)
+void LoanInfo::setReturnDate(Date* returnDate)
 {
+	//this가 nullptr인경우 호출이 왜 돼냐?
 	this->returnDate = returnDate;
 }
-void LoanInfo::setPeriod(std::string period)
+void LoanInfo::setPeriod(int period)
 {
 	this->period = period;
 }
@@ -55,14 +60,14 @@ void LoanInfo::display(User* user, Book* book)
 {
 	IOHandler ioh;
 	std::string bookType = "잡지";
-	std::string returnDateStr = returnDate == "NOT_FOUND" ? "" : returnDate;
-	std::string periodStr = period == "NOT_FOUND" ? "" : period;
+	std::string returnDateStr = returnDate->to_string() == "NOT_FOUND" ? "" : returnDate->to_string();
+	std::string periodStr = period == NOT_FOUND ? "" : std::to_string(period);
 	if (typeid(*book).name() == typeid(TextBook).name())
 		bookType = "전공";
 	ioh.displayMessageAsCell(bookType, 6);
 	ioh.displayMessageAsCell(book->getTitle(), 6);
 	ioh.displayMessageAsCell(user->getName(), 6);
-	ioh.displayMessageAsCell(loanedDate, 11);
+	ioh.displayMessageAsCell(loanedDate->to_string(), 11);
 	ioh.displayMessageAsCell(returnDateStr, 11);
 	ioh.displayMessageAsCell(periodStr, 6);
 }
@@ -70,16 +75,26 @@ void LoanInfo::display(User* user, Book* book)
 //Compare
 bool LoanInfo::compare(Book* currentBook, Book* targetBook, LoanInfo* targetLoanInfo)
 {
-	int currentBookPriority = currentBook->getPriority();
+	int currentBookPriority = currentBook->getPriority();			//우선순위 높음 = int값이 낮음		ex) 0(높음) ~ n(낮음)
 	int targetBookPriority = targetBook->getPriority();
 
-	if (currentBookPriority > targetBookPriority)
+	if (currentBookPriority > targetBookPriority)					//현재책의 우선순위가 낮으면 뒤로뺀다.
 		return true;
-	else if (currentBookPriority == targetBookPriority)
-		if (currentBook->getTitle() > targetBook->getTitle())
+	else if (currentBookPriority == targetBookPriority)				//우선순위가 동등하다면 제목으로 비교한다.
+		if (currentBook->getTitle() > targetBook->getTitle())		//현재책의 제목의 우선순위가 낮으면 뒤로뺀다.
 			return true;
-		else if (currentBook->getTitle() == targetBook->getTitle())
-			if (this->loanedDate > targetLoanInfo->loanedDate)
+		else if (currentBook->getTitle() == targetBook->getTitle())	//제목이 동등하다면 대출일로 비교한다.
+			if (this->loanedDate->totalDays() > targetLoanInfo->loanedDate->totalDays())	//대출일이 나중이면 뒤로뺀다
 				return true;
 	return false;
+}
+
+//Write
+std::string LoanInfo::to_string()
+{
+	bool isReturned = returnDate == nullptr ? 0 : 1;
+	if (isReturned)
+		return std::to_string(isReturned) + " " + serial + " " + loanerId + " " + bookId + " " + loanedDate->to_string() + " " + returnDate->to_string() + " " + std::to_string(period);
+	else
+		return std::to_string(isReturned) + " " + serial + " " + loanerId + " " + bookId + " " + loanedDate->to_string();
 }

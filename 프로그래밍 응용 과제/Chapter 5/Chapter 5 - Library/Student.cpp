@@ -25,3 +25,8 @@ void Student::display()
 	ioh.displayMessageAsCell(grade, 6);
 	ioh.displayMessage(contact);
 }
+
+std::string Student::to_string()
+{
+	return std::to_string(STUDENT) + " " + id + " " + name + " " + department + " " + std::to_string(userState) + " " + year + " " + grade + " " + contact;
+}

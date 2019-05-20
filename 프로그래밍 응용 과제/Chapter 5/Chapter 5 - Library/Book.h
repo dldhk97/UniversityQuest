@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include "Date.h"
 
 class Magazine;
 
@@ -10,7 +11,8 @@ enum BookState {LOANABLE = 100001, LOANING, INLOANBLE};
 class Book
 {
 protected:
-	std::string id, title, publisher, publicationDate;
+	std::string id, title, publisher;
+	Date* publicationDate;
 	int bookState;
 public:
 	//Getter
@@ -28,5 +30,8 @@ public:
 	//Compare
 	int getPriority();
 	bool compare(Book* book);
+
+	//Write
+	virtual std::string to_string();
 };
 

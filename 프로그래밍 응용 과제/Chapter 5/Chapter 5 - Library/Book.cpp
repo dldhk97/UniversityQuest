@@ -48,3 +48,8 @@ bool Book::compare(Book* book)
 			return true;
 	return false;
 }
+//Write
+std::string Book::to_string()
+{
+	return "";
+}

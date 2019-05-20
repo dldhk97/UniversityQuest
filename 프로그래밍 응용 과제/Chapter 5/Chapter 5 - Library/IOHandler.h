@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 
 #include "List.h"
 #include "User.h"
@@ -11,8 +12,9 @@
 #include "Professor.h"
 #include "Magazine.h"
 #include "TextBook.h"
+#include "Date.h"
 
-enum MenuType {MAINMENU = 0, USERMENU, BOOKMENU, LOANMENU, EXIT};
+enum MenuType {MAIN = 0, USER, BOOK, LOAN, EXIT};
 enum UserManage { INSERTUSER = 1, CHANGESTATE, DISPLAYUSERS};
 enum BookManage { INSERTBOOK = 1, DISPLAYBOOKS = 3};
 enum LoanManage { LOANBOOK = 1, RETURNBOOK, DISPLAYHISTORY};
@@ -27,12 +29,14 @@ public:
 	int getUserType();
 	int getBookType();
 
-	//Getter
+	//Class Getter
 	Student* getStudent();
 	Professor* getProfessor();
 	Magazine* getMagazine();
 	TextBook* getTextBook();
+	Date* getDate(std::string message);
 
+	//Getter
 	int getInt(std::string message);
 	std::string getString(std::string message);
 
@@ -47,9 +51,10 @@ public:
 	void displayBook(Book* book);
 	void displayLoanInfo(User* user, Book* book, LoanInfo* loanInfo);
 
-	//File IO
-	bool readFile();
-	bool writeFile();
+	//File I/O
+	bool readFile(const std::string fileDirectory, List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList);
+	void createEmptyFile(const std::string fileDirectory);
+	bool writeFile(const std::string fileDirectory, List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList);
 };
 
 template <typename dataType>

@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Book.cpp" />
+    <ClCompile Include="Date.cpp" />
     <ClCompile Include="IOHandler.cpp" />
     <ClCompile Include="LoanInfo.cpp" />
     <ClCompile Include="Magazine.cpp" />
@@ -156,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Book.h" />
+    <ClInclude Include="Date.h" />
     <ClInclude Include="IOHandler.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="LoanInfo.h" />

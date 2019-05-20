@@ -48,3 +48,8 @@ bool User::compare(User* user)
 			return true;
 	return false;
 }
+//Write
+std::string User::to_string()
+{
+	return "";
+}
