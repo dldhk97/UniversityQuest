@@ -65,11 +65,13 @@ void LoanInfo::display(User* user, Book* book)
 	if (typeid(*book).name() == typeid(TextBook).name())
 		bookType = "전공";
 	ioh.displayMessageAsCell(bookType, 6);
-	ioh.displayMessageAsCell(book->getTitle(), 6);
+	ioh.displayMessageAsCell(book->getTitle(), 12);
+	ioh.displayMessageAsCell(book->getId(), 6);
 	ioh.displayMessageAsCell(user->getName(), 6);
+	ioh.displayMessageAsCell(user->getId(), 6);
 	ioh.displayMessageAsCell(loanedDate->to_string(), 11);
 	ioh.displayMessageAsCell(returnDateStr, 11);
-	ioh.displayMessageAsCell(periodStr, 6);
+	ioh.displayMessage(periodStr);
 }
 
 //Compare
@@ -78,13 +80,13 @@ bool LoanInfo::compare(Book* currentBook, Book* targetBook, LoanInfo* targetLoan
 	int currentBookPriority = currentBook->getPriority();			//우선순위 높음 = int값이 낮음		ex) 0(높음) ~ n(낮음)
 	int targetBookPriority = targetBook->getPriority();
 
-	if (currentBookPriority > targetBookPriority)					//현재책의 우선순위가 낮으면 뒤로뺀다.
+	if (currentBookPriority < targetBookPriority)
 		return true;
 	else if (currentBookPriority == targetBookPriority)				//우선순위가 동등하다면 제목으로 비교한다.
-		if (currentBook->getTitle() > targetBook->getTitle())		//현재책의 제목의 우선순위가 낮으면 뒤로뺀다.
+		if (currentBook->getTitle() > targetBook->getTitle())
 			return true;
 		else if (currentBook->getTitle() == targetBook->getTitle())	//제목이 동등하다면 대출일로 비교한다.
-			if (this->loanedDate->totalDays() > targetLoanInfo->loanedDate->totalDays())	//대출일이 나중이면 뒤로뺀다
+			if (this->loanedDate->totalDays() < targetLoanInfo->loanedDate->totalDays())
 				return true;
 	return false;
 }

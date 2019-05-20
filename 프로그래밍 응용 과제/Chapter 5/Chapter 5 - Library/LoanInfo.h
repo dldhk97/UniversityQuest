@@ -12,7 +12,7 @@ class LoanInfo
 private:
 	std::string serial, loanerId, bookId;		//bookId가 getId에 반환된다. Serial은 getSerial으로 반환된다.
 	Date* loanedDate;
-	Date *returnDate;
+	Date* returnDate;
 	int period;
 public:
 	LoanInfo(LoanInfo* loanInfo);

@@ -45,9 +45,10 @@ public:
 
 	//Utlity
 	int findDataById(std::string id);
+	int findLoaningBookById(std::string id);
 	int findDataByLoanerId(std::string id);
 	void insertionSort();
-	void insertionSort(List<dataType>& bookList);
+	void insertionSort(List<Book>& bookList);
 };
 //Initializer
 template<typename dataType> 
@@ -174,6 +175,15 @@ int List<dataType>::findDataById(std::string id)
 			return index;
 	return NOT_FOUND;
 }
+//LoanInfo만을 위한 메소드 : 검색할 책 id 중 대출중인(반환되지 않은) 도서 index 반환
+template<typename dataType>
+int List<dataType>::findLoaningBookById(std::string id)
+{
+	for (int index = 0; index < size; index++)
+		if (dataArr[index]->getId() == id && dataArr[index]->getReturnDate() == nullptr)
+			return index;
+	return NOT_FOUND;
+}
 //LoanInfo만을 위한 메소드 : 대출자의 id로 도서를 찾아 반환
 template<typename dataType>
 int List<dataType>::findDataByLoanerId(std::string id)
@@ -202,7 +212,7 @@ void List<dataType>::insertionSort()
 	}
 }
 template<typename dataType>
-void List<dataType>::insertionSort(List<dataType>& bookList)
+void List<dataType>::insertionSort(List<Book>& bookList)
 {
 	int i, j;
 	dataType* temp;
@@ -211,9 +221,9 @@ void List<dataType>::insertionSort(List<dataType>& bookList)
 	{
 		j = i;
 		
-		Book currentBook = bookList.getData(bookList.findDataById(dataArr[j]->getId()));
-		Book targetBook = bookList.getData(bookList.findDataById(dataArr[j - 1]->getId()));
-		while (j > 0 && dataArr[j - 1]->compare(currentBook, targetBook, dataArr[j]))
+		Book* currentBook = bookList.getData(bookList.findDataById(dataArr[j]->getId()));
+		Book* targetBook = bookList.getData(bookList.findDataById(dataArr[j - 1]->getId()));
+		while (j > 0 && dataArr[j]->compare(currentBook, targetBook, dataArr[j - 1]))
 		{
 			temp = dataArr[j - 1];
 			dataArr[j - 1] = dataArr[j];

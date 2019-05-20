@@ -7,7 +7,7 @@ using namespace std;
 //메모리 해제하는거 기억해라
 //LoanInfo 제대로 정렬되는지 봐라
 
-const std::string FILE_DIRECTORY = "C:\\libraryManager.dat";
+const std::string FILE_DIRECTORY = "C:\\LibraryManager.dat";
 
 int main()
 {

@@ -28,13 +28,12 @@ void Magazine::display()
 		break;
 	}
 	ioh.displayMessageAsCell(id, 6);
-	ioh.displayMessageAsCell(title, 6);
-	ioh.displayMessageAsCell(publisher, 6);
+	ioh.displayMessageAsCell(title, 12);
+	ioh.displayMessageAsCell(publisher, 12);
 	ioh.displayMessageAsCell(publicationDate->to_string(), 11);
 	ioh.displayMessageAsCell("", 6);
 	ioh.displayMessageAsCell(bookStateStr, 9);
-	ioh.displayMessageAsCell(volume, 6);
-	ioh.displayMessage("");
+	ioh.displayMessage(volume);
 }
 //Write
 std::string Magazine::to_string()
