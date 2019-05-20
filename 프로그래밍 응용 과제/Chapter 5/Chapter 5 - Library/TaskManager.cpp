@@ -291,7 +291,18 @@ void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<Loan
 		return;
 	if (targetBook->getBookState() == LOANING)
 	{
-		ioh.displayMessage(targetBook->getTitle() + "은(는) " + loaner->getName() + "에게 이미 대출중입니다.");
+		std::string anotherLoanerId;
+		User* anotherLoaner;
+		for (int i = 0; i < loanInfoList.getSize(); i++)
+		{
+			if (loanInfoList.getData(i)->getId() == targetBook->getId() && loanInfoList.getData(i)->getReturnDate() == nullptr)
+			{
+				anotherLoanerId = loanInfoList.getData(i)->getLoanerId();
+				break;
+			}
+		}
+		anotherLoaner = userList.getData(userList.findDataById(anotherLoanerId));
+		ioh.displayMessage(targetBook->getTitle() + "은(는) " + anotherLoaner->getName() + "에게 이미 대출중입니다.");
 		return;
 	}
 	else if (targetBook->getBookState() == INLOANBLE)
