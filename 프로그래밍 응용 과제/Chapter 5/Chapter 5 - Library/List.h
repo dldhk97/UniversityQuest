@@ -219,10 +219,7 @@ void List<dataType>::insertionSort(List<Book>& bookList)
 	for (i = 1; i < size; i++)
 	{
 		j = i;
-		
-		Book* currentBook = bookList.getData(bookList.findDataById(dataArr[j]->getId()));
-		Book* targetBook = bookList.getData(bookList.findDataById(dataArr[j - 1]->getId()));
-		while (j > 0 && dataArr[j]->compare(currentBook, targetBook, dataArr[j - 1]))
+		while (j > 0 && dataArr[j]->compare(bookList.getData(bookList.findDataById(dataArr[j]->getId())), bookList.getData(bookList.findDataById(dataArr[j - 1]->getId())), dataArr[j - 1]))
 		{
 			temp = dataArr[j - 1];
 			dataArr[j - 1] = dataArr[j];

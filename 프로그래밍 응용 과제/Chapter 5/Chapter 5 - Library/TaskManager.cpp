@@ -63,7 +63,6 @@ void TaskManager::getLoanMenu(List<User>& userList, List<Book>& bookList, List<L
 		{
 		case LOANBOOK:
 			loanBook(userList, bookList, loanInfoList, isDataChanged);
-			loanInfoList.insertionSort(bookList);
 			break;
 		case RETURNBOOK:
 			returnBook(bookList, loanInfoList);
@@ -121,10 +120,13 @@ void TaskManager::changeUserState(List<User>& userList, List<Book>& bookList, Li
 	if (loanInfoList.findDataByLoanerId(id) != NOT_FOUND)
 	{
 		List<LoanInfo> loannedList;
-		ioh.displayMessage(currentUser->getName() + "이(가) 대여중인 책이 존재합니다.");
+		ioh.displayMessage(currentUser->getName() + "이(가) 대여중인 책이 존재합니다. 대여중인 책 목록은 아래와 같습니다.");
 		for (int i = 0; i < loanInfoList.getSize(); i++)
-			if (loanInfoList.getData(i)->getLoanerId() == id)
+		{
+			if (loanInfoList.getData(i)->getLoanerId() == id && loanInfoList.getData(i)->getReturnDate() == nullptr)
 				loannedList.insertData(new LoanInfo(loanInfoList.getData(i)));
+		}
+		loannedList.insertionSort(bookList);
 		displayLoanHistory(userList, bookList, loannedList);
 		return;
 	}
@@ -207,9 +209,10 @@ void TaskManager::changeBookState(List<User>& userList, List<Book>& bookList, Li
 		List<LoanInfo> loannedList;
 		for (int i = 0; i < loanInfoList.getSize(); i++)
 		{
-			if (loanInfoList.getData(i)->getId() == id)
+			if (loanInfoList.getData(i)->getId() == id && loanInfoList.getData(i)->getReturnDate() == nullptr)
 				loannedList.insertData(new LoanInfo(loanInfoList.getData(i)));
 		}
+		loannedList.insertionSort(bookList);
 		displayLoanHistory(userList, bookList, loannedList);
 		return;
 	}
@@ -247,7 +250,7 @@ void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<Loan
 		return;
 	if (loaner->getUserState() == INVALID)
 	{
-		ioh.displayMessage(loaner->getName() + "은(는) 유효한 사용자가 아닙니다.");
+		ioh.displayMessage(loaner->getName() + "은(는) 사용 중지된 사용자입니다.");
 		return;
 	}
 	Book* targetBook = ioh.findDataById("도서 ID :", bookList);
