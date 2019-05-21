@@ -114,7 +114,7 @@ void IOHandler::displayMessage(std::string message)
 {
 	std::cout << message << '\n';
 }
-void IOHandler::displayMessageAsCell(std::string message, int maxLength)
+void IOHandler::displayShortMessage(std::string message, int maxLength)
 {
 	std::string newMessage;
 	if (message.length() > maxLength)

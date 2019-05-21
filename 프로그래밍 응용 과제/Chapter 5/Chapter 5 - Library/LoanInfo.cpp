@@ -31,7 +31,7 @@ LoanInfo::~LoanInfo()
 		delete returnDate;
 }
 //Getter
-std::string LoanInfo::getId()
+std::string LoanInfo::getBookId()
 {
 	return this->bookId;
 }
@@ -73,13 +73,13 @@ void LoanInfo::display(User* user, Book* book)
 	std::string periodStr = period == NOT_FOUND ? "" : std::to_string(period);
 	if (typeid(*book).name() == typeid(TextBook).name())
 		bookType = "Àü°ø";
-	ioh.displayMessageAsCell(bookType, 6);
-	ioh.displayMessageAsCell(book->getTitle(), 12);
-	ioh.displayMessageAsCell(book->getId(), 6);
-	ioh.displayMessageAsCell(user->getName(), 6);
-	ioh.displayMessageAsCell(user->getId(), 6);
-	ioh.displayMessageAsCell(loanedDate->to_string(), 11);
-	ioh.displayMessageAsCell(returnDateStr, 11);
+	ioh.displayShortMessage(bookType, 6);
+	ioh.displayShortMessage(book->getTitle(), 12);
+	ioh.displayShortMessage(book->getId(), 6);
+	ioh.displayShortMessage(user->getName(), 6);
+	ioh.displayShortMessage(user->getId(), 6);
+	ioh.displayShortMessage(loanedDate->to_string(), 11);
+	ioh.displayShortMessage(returnDateStr, 11);
 	ioh.displayMessage(periodStr);
 }
 

@@ -23,6 +23,8 @@ public:
 template <typename dataType1, typename dataType2>
 Pair<dataType1, dataType2>::Pair()
 {
+	this->first = "";
+	this->second = -1;
 }
 template <typename dataType1, typename dataType2>
 Pair<dataType1, dataType2>::Pair(dataType1 first, dataType2 second)

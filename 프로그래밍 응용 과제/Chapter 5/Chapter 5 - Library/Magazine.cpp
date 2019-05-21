@@ -35,12 +35,12 @@ void Magazine::display()
 		bookStateStr = "대출 불가";
 		break;
 	}
-	ioh.displayMessageAsCell(id, 6);
-	ioh.displayMessageAsCell(title, 12);
-	ioh.displayMessageAsCell(publisher, 12);
-	ioh.displayMessageAsCell(publicationDate->to_string(), 11);
-	ioh.displayMessageAsCell("", 6);
-	ioh.displayMessageAsCell(bookStateStr, 9);
+	ioh.displayShortMessage(id, 6);
+	ioh.displayShortMessage(title, 12);
+	ioh.displayShortMessage(publisher, 12);
+	ioh.displayShortMessage(publicationDate->to_string(), 11);
+	ioh.displayShortMessage("", 6);
+	ioh.displayShortMessage(bookStateStr, 9);
 	ioh.displayMessage(volume);
 }
 //Write

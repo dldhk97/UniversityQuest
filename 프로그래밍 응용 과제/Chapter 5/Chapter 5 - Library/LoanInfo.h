@@ -10,7 +10,7 @@ class IOHandler;
 class LoanInfo
 {
 private:
-	std::string serial, loanerId, bookId;		//bookId가 getId에 반환된다. Serial은 getSerial으로 반환된다.
+	std::string serial, loanerId, bookId;
 	Date* loanedDate;
 	Date* returnDate;
 	int period;
@@ -21,7 +21,7 @@ public:
 	~LoanInfo();
 
 	//Getter
-	std::string getId();
+	std::string getBookId();
 	std::string getSerial();
 	Date* getLoanedDate();
 	Date* getReturnDate();

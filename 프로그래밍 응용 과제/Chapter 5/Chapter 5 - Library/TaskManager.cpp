@@ -66,16 +66,12 @@ void TaskManager::insertUser(List<User>& userList)
 	{
 		case PROFESSOR:
 		{
-			Professor* newProfessor;
-			newProfessor = ioh.getProfessor();
-			newUser = newProfessor;
+			newUser = ioh.getProfessor();
 			break;
 		}
 		case STUDENT:
 		{
-			Student* newStudent;
-			newStudent = ioh.getStudent();
-			newUser = newStudent;
+			newUser = ioh.getStudent();
 			break;
 		}
 	}
@@ -86,19 +82,19 @@ void TaskManager::insertUser(List<User>& userList)
 void TaskManager::changeUserState(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
 	IOHandler ioh;
-	if (userList.getSize() <= 0)
+	if (userList.isEmpty())
 	{
 		ioh.displayMessage("[SYS]사용자 목록이 비어있습니다.");
 		return;
 	}
+
 	std::string id = ioh.getString("변경할 구성원의 ID 입력 :");
-	int index = userList.findDataById(id);
-	if (index == NOT_FOUND)
+	User* currentUser = userList.findDataById(id);
+	if (currentUser == nullptr)
 	{
 		ioh.displayMessage("[SYS]구성원을 찾을 수 없습니다.");
 		return;
 	}
-	User* currentUser = userList.getData(index);
 
 	//해당사용자가 대여중인 책 조사
 	List<LoanInfo> loannedList;
@@ -107,7 +103,7 @@ void TaskManager::changeUserState(List<User>& userList, List<Book>& bookList, Li
 		if (loanInfoList.getData(i)->getLoanerId() == id && loanInfoList.getData(i)->getReturnDate() == nullptr)
 			loannedList.insertData(new LoanInfo(loanInfoList.getData(i)));
 	}
-	if (loannedList.getSize() > 0)
+	if (loannedList.isEmpty() == false)
 	{
 		ioh.displayMessage("[SYS]" + currentUser->getName() + "이(가) 대여중인 책이 존재합니다. 대여중인 책 목록은 아래와 같습니다.");
 		loannedList.insertionSort(bookList);
@@ -149,16 +145,12 @@ void TaskManager::insertBook(List<Book>& bookList)
 	{
 		case MAGAZINE:
 		{
-			Magazine* newMagazine;
-			newMagazine = ioh.getMagazine();
-			newBook = newMagazine;
+			newBook = ioh.getMagazine();
 			break;
 		}
 		case TEXTBOOK:
 		{
-			TextBook* newTextBook;
-			newTextBook = ioh.getTextBook();
-			newBook = newTextBook;
+			newBook = ioh.getTextBook();
 			break;
 		}
 	}
@@ -169,41 +161,42 @@ void TaskManager::insertBook(List<Book>& bookList)
 void TaskManager::changeBookState(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
 	IOHandler ioh;
-	if (bookList.getSize() <= 0)
+	if (bookList.isEmpty())
 	{
 		ioh.displayMessage("[SYS]도서 목록이 비어있습니다.");
 		return;
 	}
+
 	std::string id = ioh.getString("변경할 도서의 ID 입력 :");
-	int index = bookList.findDataById(id);
-	if (index == NOT_FOUND)
+	Book* currentBook = bookList.findDataById(id);
+	if (currentBook == nullptr)
 	{
 		ioh.displayMessage("[SYS]도서를 찾을 수 없습니다.");
 		return;
 	}
-	Book* currentBook = bookList.getData(index);
-	if (currentBook->getBookState() == LOANABLE)
-	{
-		currentBook->setBookState(INLOANBLE);
-		ioh.displayMessage("[SYS]변경되었습니다.");
-		isDataChanged = true;
-	}
-	else if (currentBook->getBookState() == LOANING)
+	
+	if (currentBook->getBookState() == LOANING)
 	{
 		ioh.displayMessage("[SYS]" + currentBook->getTitle() + "은(는) 대여중인 책입니다.");
 		List<LoanInfo> loannedList;
 		for (int i = 0; i < loanInfoList.getSize(); i++)
 		{
-			if (loanInfoList.getData(i)->getId() == id && loanInfoList.getData(i)->getReturnDate() == nullptr)
+			if (loanInfoList.getData(i)->getBookId() == id && loanInfoList.getData(i)->getReturnDate() == nullptr)
 				loannedList.insertData(new LoanInfo(loanInfoList.getData(i)));
 		}
 		loannedList.insertionSort(bookList);
 		displayLoanHistory(userList, bookList, loannedList);
 		return;
 	}
-	else
+	else if (currentBook->getBookState() == INLOANBLE)
 	{
 		ioh.displayMessage("[SYS]이미 대출 불가능한 책입니다.");
+	}
+	else
+	{
+		currentBook->setBookState(INLOANBLE);
+		ioh.displayMessage("[SYS]변경되었습니다.");
+		isDataChanged = true;
 	}
 	return;
 }
@@ -224,36 +217,34 @@ void TaskManager::displayBookList(List<Book>& bookList)
 void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
 	IOHandler ioh;
-	if (userList.getSize() <= 0 || bookList.getSize() <= 0)
+	if (userList.isEmpty() || bookList.isEmpty())
 	{
 		ioh.displayMessage("[SYS]사용자 목록 또는 도서 목록이 비어있습니다.");
 		return;
 	}
-
-	User* loaner = ioh.findDataById("구성원 ID :", userList);
+	//User*
+	User* loaner = userList.findDataById(ioh.getString("구성원 ID:"));
 	if (loaner == nullptr)
+	{
+		ioh.displayMessage("[SYS]해당 사용자를 찾을 수 없습니다.");
 		return;
+	}
+		
 	if (loaner->getUserState() == INVALID)
 	{
 		ioh.displayMessage("[SYS]" + loaner->getName() + "은(는) 사용 중지된 사용자입니다.");
 		return;
 	}
-	Book* targetBook = ioh.findDataById("도서 ID :", bookList);
+	
+	Book* targetBook = bookList.findDataById(ioh.getString("도서 ID:"));
 	if (targetBook == nullptr)
+	{
+		ioh.displayMessage("[SYS]해당 도서를 찾을 수 없습니다.");
 		return;
+	}
 	if (targetBook->getBookState() == LOANING)
 	{
-		std::string anotherLoanerId;
-		User* anotherLoaner;
-		for (int i = 0; i < loanInfoList.getSize(); i++)
-		{
-			if (loanInfoList.getData(i)->getId() == targetBook->getId() && loanInfoList.getData(i)->getReturnDate() == nullptr)
-			{
-				anotherLoanerId = loanInfoList.getData(i)->getLoanerId();
-				break;
-			}
-		}
-		anotherLoaner = userList.getData(userList.findDataById(anotherLoanerId));
+		User* anotherLoaner = findLoaner(targetBook, userList, loanInfoList);
 		ioh.displayMessage("[SYS]" + targetBook->getTitle() + "은(는) " + anotherLoaner->getName() + "에게 이미 대출중입니다.");
 		return;
 	}
@@ -277,11 +268,20 @@ void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<Loan
 void TaskManager::returnBook(List<Book>& bookList, List<LoanInfo>& loanInfoList)
 {
 	IOHandler ioh;
-	Book* targetBook = ioh.findDataById("도서 ID :", bookList);
+
+	Book* targetBook = bookList.findDataById(ioh.getString("도서 ID :"));
 	if (targetBook == nullptr)
+	{
+		ioh.displayMessage("[SYS]해당 도서를 찾을 수 없습니다.");
 		return;
+	}
+	if (targetBook->getBookState() != LOANING)
+	{
+		ioh.displayMessage("[SYS]해당 도서는 대여중이지 않습니다.");
+		return;
+	}
 	Date* returnDate = ioh.getDate("반납일 :");
-	LoanInfo* targetLoanInfo = loanInfoList.getData(loanInfoList.findLoaningBookById(targetBook->getId()));
+	LoanInfo* targetLoanInfo = loanInfoList.getData(loanInfoList.findLoaningBookIndexById(targetBook->getId()));
 	targetLoanInfo->setReturnDate(returnDate);
 
 	long endDays = returnDate->totalDays();
@@ -300,9 +300,20 @@ void TaskManager::displayLoanHistory(List<User>& userList, List<Book>& bookList,
 	for (int i = 0; i < size; i++)
 	{
 		LoanInfo* targetLoanInfo = loanInfoList.getData(i);
-		User* loanner = userList.getData(userList.findDataById(targetLoanInfo->getLoanerId()));
-		Book* targetBook = bookList.getData(bookList.findDataById(targetLoanInfo->getId()));
+		User* loanner = userList.findDataById(targetLoanInfo->getLoanerId());
+		Book* targetBook = bookList.findDataById(targetLoanInfo->getBookId());
 		ioh.displayLoanInfo(loanner, targetBook, targetLoanInfo);
 	}
 	ioh.displayMessage("========================================================================================");
+}
+//Utility
+User* TaskManager::findLoaner(Book* book, List<User>& userList, List<LoanInfo>& loanInfoList)
+{
+	for (int i = 0; i < loanInfoList.getSize(); i++)
+	{
+		if (loanInfoList.getData(i)->getBookId() == book->getId() && loanInfoList.getData(i)->getReturnDate() == nullptr)
+		{
+			return userList.findDataById(loanInfoList.getData(i)->getLoanerId());
+		}
+	}
 }

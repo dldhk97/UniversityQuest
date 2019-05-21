@@ -26,13 +26,13 @@ void Student::display()
 {
 	IOHandler ioh;
 	std::string userStateStr = userState == VALID ? "ÀçÇÐ" : "Á¹¾÷";
-	ioh.displayMessageAsCell(id, 6);
-	ioh.displayMessageAsCell(name, 6);
-	ioh.displayMessageAsCell(department, 12);
-	ioh.displayMessageAsCell(userStateStr, 6);
-	ioh.displayMessageAsCell("\t", 6);
-	ioh.displayMessageAsCell(year, 6);
-	ioh.displayMessageAsCell(grade, 6);
+	ioh.displayShortMessage(id, 6);
+	ioh.displayShortMessage(name, 6);
+	ioh.displayShortMessage(department, 12);
+	ioh.displayShortMessage(userStateStr, 6);
+	ioh.displayShortMessage("\t", 6);
+	ioh.displayShortMessage(year, 6);
+	ioh.displayShortMessage(grade, 6);
 	ioh.displayMessage(contact);
 }
 

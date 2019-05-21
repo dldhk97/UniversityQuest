@@ -20,5 +20,8 @@ public:
 	void loanBook(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged);
 	void returnBook(List<Book>& bookList, List<LoanInfo>& loanInfoList);
 	void displayLoanHistory(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList);
+
+	//Utility
+	User* findLoaner(Book* book, List<User>& userList, List<LoanInfo>& loanInfoList);
 };
 

@@ -43,11 +43,11 @@ public:
 	void AddNewLastId(std::string typeName, int lastId);	//새 lastId 추가
 
 	//Utlity
-	int findDataById(std::string id);
-	int findLoaningBookById(std::string id);
-	int findDataByLoanerId(std::string id);
+	dataType* findDataById(std::string id);
+	int findLoaningBookIndexById(std::string id);
 	void insertionSort();
 	void insertionSort(List<Book>& bookList);
+	bool isEmpty();
 };
 //Initializer
 template<typename dataType> 
@@ -166,29 +166,20 @@ void List<dataType>::AddNewLastId(std::string typeName, int lastId)
 	lastIdArr[lastIdCnt++].setSecond(lastId);
 }
 //Utility
-template<typename dataType> 
-int List<dataType>::findDataById(std::string id)
+template<typename dataType>
+dataType* List<dataType>::findDataById(std::string id)
 {
 	for (int index = 0; index < size; index++)
 		if (dataArr[index]->getId() == id)
-			return index;
-	return NOT_FOUND;
+			return dataArr[index];
+	return nullptr;
 }
 //LoanInfo만을 위한 메소드 : 검색할 책 id 중 대출중인(반환되지 않은) 도서 index 반환
 template<typename dataType>
-int List<dataType>::findLoaningBookById(std::string id)
+int List<dataType>::findLoaningBookIndexById(std::string id)
 {
 	for (int index = 0; index < size; index++)
-		if (dataArr[index]->getId() == id && dataArr[index]->getReturnDate() == nullptr)
-			return index;
-	return NOT_FOUND;
-}
-//LoanInfo만을 위한 메소드 : 대출자의 id로 도서를 찾아 반환
-template<typename dataType>
-int List<dataType>::findDataByLoanerId(std::string id)
-{
-	for (int index = 0; index < size; index++)
-		if (dataArr[index]->getLoanerId() == id)
+		if (dataArr[index]->getBookId() == id && dataArr[index]->getReturnDate() == nullptr)
 			return index;
 	return NOT_FOUND;
 }
@@ -219,7 +210,7 @@ void List<dataType>::insertionSort(List<Book>& bookList)
 	for (i = 1; i < size; i++)
 	{
 		j = i;
-		while (j > 0 && dataArr[j]->compare(bookList.getData(bookList.findDataById(dataArr[j]->getId())), bookList.getData(bookList.findDataById(dataArr[j - 1]->getId())), dataArr[j - 1]))
+		while (j > 0 && dataArr[j]->compare(bookList.findDataById(dataArr[j]->getBookId()), bookList.findDataById(dataArr[j - 1]->getBookId()), dataArr[j - 1]))
 		{
 			temp = dataArr[j - 1];
 			dataArr[j - 1] = dataArr[j];
@@ -227,4 +218,9 @@ void List<dataType>::insertionSort(List<Book>& bookList)
 			j--;
 		}
 	}
+}
+template<typename dataType>
+bool List<dataType>::isEmpty()
+{
+	return size <= 0 ? true : false;
 }
