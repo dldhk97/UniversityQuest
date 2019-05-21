@@ -15,9 +15,9 @@ std::string User::getName()
 	return this->name;
 }
 //Setter
-void User::setId(std::string id)
+void User::setId(int newId)
 {
-	this->id = id;
+	//this->id = id;
 }
 void User::setUserState(int userState)
 {

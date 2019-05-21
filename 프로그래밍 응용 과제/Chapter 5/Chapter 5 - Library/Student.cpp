@@ -12,6 +12,16 @@ Student::Student(std::string id, std::string name, std::string department, int u
 	this->contact = contact;
 }
 
+void Student::setId(int newId)
+{
+	std::string newIdStr = "F";
+	if (newId < 10)
+		newIdStr = newIdStr + "0" + std::to_string(newId);
+	else
+		newIdStr = newIdStr + std::to_string(newId);
+	this->id = newIdStr;
+}
+
 void Student::display()
 {
 	IOHandler ioh;

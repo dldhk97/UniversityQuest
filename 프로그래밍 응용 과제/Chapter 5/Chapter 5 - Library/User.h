@@ -22,7 +22,7 @@ public:
 	std::string getName();
 
 	//Setter
-	void setId(std::string id);
+	virtual void setId(int newId);
 	void setUserState(int userState);
 
 	//Display

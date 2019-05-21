@@ -22,9 +22,9 @@ std::string Book::getTitle()
 	return title;
 }
 //Setter
-void Book::setId(std::string id)
+void Book::setId(int newId)
 {
-	this->id = id;
+	//this->id = id;
 }
 void Book::setBookState(int bookState)
 {

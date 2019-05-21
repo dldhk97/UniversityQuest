@@ -23,7 +23,7 @@ public:
 	std::string getTitle();
 
 	//Setter
-	void setId(std::string id);
+	virtual void setId(int newId);
 	void setBookState(int bookState);
 
 	//Display

@@ -11,6 +11,8 @@ private:
 public:
 	Magazine(std::string id, std::string title, std::string publisher, Date* publicationDate, int bookState, std::string volume);
 
+	virtual void setId(int newId);
+
 	virtual void display();
 	virtual std::string to_string();
 };

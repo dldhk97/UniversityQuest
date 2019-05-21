@@ -30,13 +30,13 @@ int main()
 		switch (userInput)
 		{
 		case USER:
-			tskMgr.manageUser(userList, bookList, loanInfoList, isDataChanged);
+			tskMgr.getUserMenu(userList, bookList, loanInfoList, isDataChanged);
 			break;
 		case BOOK:
-			tskMgr.manageBook(userList, bookList, loanInfoList, isDataChanged);
+			tskMgr.getBookMenu(userList, bookList, loanInfoList, isDataChanged);
 			break;
 		case LOAN:
-			tskMgr.manageLoan(userList, bookList, loanInfoList, isDataChanged);
+			tskMgr.getLoanMenu(userList, bookList, loanInfoList, isDataChanged);
 			break;
 		}
 	}

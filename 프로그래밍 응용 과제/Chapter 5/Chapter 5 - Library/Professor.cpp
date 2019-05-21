@@ -11,6 +11,16 @@ Professor::Professor(std::string id, std::string name, std::string department, i
 	this->laboratory = laboratory;
 }
 
+void Professor::setId(int newId)
+{
+	std::string newIdStr = "U";
+	if (newId < 10)
+		newIdStr = newIdStr + "0" + std::to_string(newId);
+	else
+		newIdStr = newIdStr + std::to_string(newId);
+	this->id = newIdStr;
+}
+
 void Professor::display()
 {
 	IOHandler ioh;

@@ -55,7 +55,6 @@ void LoanInfo::setSerial(std::string serial)
 }
 void LoanInfo::setReturnDate(Date* returnDate)
 {
-	//this가 nullptr인경우 호출이 왜 돼냐?
 	this->returnDate = returnDate;
 }
 void LoanInfo::setPeriod(int period)

@@ -10,7 +10,15 @@ Magazine::Magazine(std::string id, std::string title, std::string publisher, Dat
 	this->bookState = bookState;
 	this->volume = volume;
 }
-
+void Magazine::setId(int newId)
+{
+	std::string newIdStr = "M";
+	if (newId < 10)
+		newIdStr = newIdStr + "0" + std::to_string(newId);
+	else
+		newIdStr = newIdStr + std::to_string(newId);
+	this->id = newIdStr;
+}
 void Magazine::display()
 {
 	IOHandler ioh;

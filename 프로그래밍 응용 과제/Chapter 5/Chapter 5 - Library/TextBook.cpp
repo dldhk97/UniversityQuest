@@ -10,7 +10,15 @@ TextBook::TextBook(std::string id, std::string title, std::string publisher, Dat
 	this->bookState = bookState;
 	this->detailedSubject = detailedSubject;
 }
-
+void TextBook::setId(int newId)
+{
+	std::string newIdStr = "B";
+	if (newId < 10)
+		newIdStr = newIdStr + "0" + std::to_string(newId);
+	else
+		newIdStr = newIdStr + std::to_string(newId);
+	this->id = newIdStr;
+}
 void TextBook::display()
 {
 	IOHandler ioh;

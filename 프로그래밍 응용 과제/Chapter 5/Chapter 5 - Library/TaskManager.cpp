@@ -1,6 +1,6 @@
 #include "TaskManager.h"
 
-void TaskManager::manageUser(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
+void TaskManager::getUserMenu(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
 	IOHandler ioh;
 	int userInput;
@@ -25,7 +25,7 @@ void TaskManager::manageUser(List<User>& userList, List<Book>& bookList, List<Lo
 		}
 	}
 }
-void TaskManager::manageBook(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
+void TaskManager::getBookMenu(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
 	IOHandler ioh;
 	int userInput;
@@ -50,7 +50,7 @@ void TaskManager::manageBook(List<User>& userList, List<Book>& bookList, List<Lo
 		}
 	}
 }
-void TaskManager::manageLoan(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
+void TaskManager::getLoanMenu(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
 	IOHandler ioh;
 	int userInput;
@@ -80,44 +80,27 @@ void TaskManager::manageLoan(List<User>& userList, List<Book>& bookList, List<Lo
 void TaskManager::insertUser(List<User>& userList)
 {
 	IOHandler ioh;
-
+	User* newUser = nullptr;
 	switch (ioh.getUserType())
 	{
-	case STUDENT:
-	{
-		Student* newStudent;
-		newStudent = ioh.getStudent();
-		if (newStudent->getId() == "NOT_FOUND")
+		case PROFESSOR:
 		{
-			int newId = userList.getLastId(typeid(Student).name());
-			std::string newIdStr = "F";
-			if (newId < 10)
-				newIdStr = newIdStr + "0" + std::to_string(newId);
-			else
-				newIdStr = newIdStr + std::to_string(newId);
-			newStudent->setId(newIdStr);
+			Professor* newProfessor;
+			newProfessor = ioh.getProfessor();
+			newUser = newProfessor;
+			break;
 		}
-		userList.insertData(newStudent);
-		break;
-	}
-	case PROFESSOR:
-	{
-		Professor* newProfessor;
-		newProfessor = ioh.getProfessor();
-		if (newProfessor->getId() == "NOT_FOUND")
+		case STUDENT:
 		{
-			int newId = userList.getLastId(typeid(Professor).name());
-			std::string newIdStr = "U";
-			if (newId < 10)
-				newIdStr = newIdStr + "0" + std::to_string(newId);
-			else
-				newIdStr = newIdStr + std::to_string(newId);
-			newProfessor->setId(newIdStr);
+			Student* newStudent;
+			newStudent = ioh.getStudent();
+			newUser = newStudent;
+			break;
 		}
-		userList.insertData(newProfessor);
-		break;
 	}
-	}
+	if (newUser->getId() == "NOT_FOUND")
+		newUser->setId(userList.getLastId(typeid(*newUser).name()));
+	userList.insertData(newUser);
 }
 void TaskManager::changeUserState(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
@@ -140,10 +123,8 @@ void TaskManager::changeUserState(List<User>& userList, List<Book>& bookList, Li
 		List<LoanInfo> loannedList;
 		ioh.displayMessage(currentUser->getName() + "이(가) 대여중인 책이 존재합니다.");
 		for (int i = 0; i < loanInfoList.getSize(); i++)
-		{
 			if (loanInfoList.getData(i)->getLoanerId() == id)
 				loannedList.insertData(new LoanInfo(loanInfoList.getData(i)));
-		}
 		displayLoanHistory(userList, bookList, loannedList);
 		return;
 	}
@@ -176,44 +157,27 @@ void TaskManager::displayUserList(List<User>& userList)
 void TaskManager::insertBook(List<Book>& bookList)
 {
 	IOHandler ioh;
-
+	Book* newBook = nullptr;
 	switch (ioh.getBookType())
 	{
-	case MAGAZINE:
-	{
-		Magazine* newMagazine;
-		newMagazine = ioh.getMagazine();
-		if (newMagazine->getId() == "NOT_FOUND")
+		case MAGAZINE:
 		{
-			int newId = bookList.getLastId(typeid(Magazine).name());
-			std::string newIdStr = "M";
-			if (newId < 10)
-				newIdStr = newIdStr + "0" + std::to_string(newId);
-			else
-				newIdStr = newIdStr + std::to_string(newId);
-			newMagazine->setId(newIdStr);
+			Magazine* newMagazine;
+			newMagazine = ioh.getMagazine();
+			newBook = newMagazine;
+			break;
 		}
-		bookList.insertData(newMagazine);
-		break;
-	}
-	case TEXTBOOK:
-	{
-		TextBook* newTextBook;
-		newTextBook = ioh.getTextBook();
-		if (newTextBook->getId() == "NOT_FOUND")
+		case TEXTBOOK:
 		{
-			int newId = bookList.getLastId(typeid(TextBook).name());
-			std::string newIdStr = "B";
-			if (newId < 10)
-				newIdStr = newIdStr + "0" + std::to_string(newId);
-			else
-				newIdStr = newIdStr + std::to_string(newId);
-			newTextBook->setId(newIdStr);
+			TextBook* newTextBook;
+			newTextBook = ioh.getTextBook();
+			newBook = newTextBook;
+			break;
 		}
-		bookList.insertData(newTextBook);
-		break;
 	}
-	}
+	if (newBook->getId() == "NOT_FOUND")
+		newBook->setId(bookList.getLastId(typeid(*newBook).name()));
+	bookList.insertData(newBook);
 }
 void TaskManager::changeBookState(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {

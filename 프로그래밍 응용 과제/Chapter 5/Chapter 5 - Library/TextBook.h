@@ -11,6 +11,8 @@ private:
 public:
 	TextBook(std::string id, std::string title, std::string publisher, Date* publicationDate, int bookState, std::string detailedSubject);
 
+	virtual void setId(int newId);
+
 	virtual void display();
 	virtual std::string to_string();
 };

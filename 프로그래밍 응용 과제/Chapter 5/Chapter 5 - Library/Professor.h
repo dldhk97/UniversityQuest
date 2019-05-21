@@ -11,6 +11,8 @@ private:
 public:
 	Professor(std::string id, std::string name, std::string department, int userState, std::string major, std::string laboratory);
 
+	virtual void setId(int newId);
+
 	virtual void display();
 	virtual std::string to_string();
 };
