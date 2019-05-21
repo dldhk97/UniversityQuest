@@ -29,7 +29,7 @@ int main()
 		case USER:
 			while (selectedOption != EXIT)							//EXIT가 아닐때까지 반복
 			{
-				selectedOption = menuManager.getMenu(USER);			//세부 메뉴 출력 및 선택
+				selectedOption = menuManager.getMenu(USER);													//세부 메뉴 출력 및 선택
 				tskMgr.userMenuAction(selectedOption, userList, bookList, loanInfoList, isDataChanged);		//세부메뉴 중 선택한 메뉴로 동작
 			}
 			break;

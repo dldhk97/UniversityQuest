@@ -22,7 +22,7 @@ public:
 	void displayLoanHistory(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList);
 
 	//Utility
-	User* findLoaner(Book* book, List<User>& userList, List<LoanInfo>& loanInfoList);
-	LoanInfo* findLoanInfoByLoaningBook(Book* book, List<Book>& bookList, List<LoanInfo>& loanInfoList);
+	User* findCurrentLoaner(Book* targetBook, List<User>& userList, List<LoanInfo>& loanInfoList);
+	LoanInfo* findCurrnetLoanInfo(Book* targetBook, List<Book>& bookList, List<LoanInfo>& loanInfoList);
 };
 

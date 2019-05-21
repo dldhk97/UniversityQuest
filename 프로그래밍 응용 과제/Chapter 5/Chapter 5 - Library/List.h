@@ -5,7 +5,7 @@
 
 const int DEFAULT_CAPACITY = 10;
 const int NOT_FOUND = -1;
-const int DEFAULT_DATATYPE_CAPACITY = 2;			//이 리스트가 서로 다른 데이터타입을 몇개까지 가질 수 있는지
+const int DEFAULT_DATATYPE_CAPACITY = 2;				//이 리스트가 서로 다른 데이터 타입을 최대 몇개까지 가질 수 있는지
 
 template <typename dataType>
 class List
@@ -17,9 +17,9 @@ private:
 	bool isChanged;
 
 	//LastId
-	int lastIdCnt;										//리스트에 저장된 데이터타입의 개수
-	Pair<std::string, int>* lastIdArr;					//first에 데이터타입의 이름, second에 lastId를 저장
-	int findLastIdIndexByType(std::string typeName);	//이미 저장된 적이 있는 데이터타입인지 찾고 인덱스 반환
+	int lastIdCnt;											//리스트에 저장된 데이터타입의 개수
+	Pair<std::string, int>* lastIdArr;						//first에 데이터타입의 이름, second에 lastId를 저장
+	int findLastIdIndexByType(std::string typeName);		//이미 저장된 적이 있는 데이터타입인지 찾고 인덱스 반환
 
 	//Memory
 	void resize(int newCapacity);
@@ -36,7 +36,7 @@ public:
 	int getSize();
 	
 	//LastID
-	int getLastId(std::string typeName);			//이미 저장된 적이 있는 데이터타입이면, lastID + 1을 반환
+	int getLastId(std::string typeName);					//이미 저장된 적이 있는 데이터타입이면, lastID + 1을 반환
 	int getlastIdCnt();
 	Pair<std::string, int> getLastIdInfo(int index);
 	void AddNewLastId(std::string typeName, int lastId);	//새 lastId 추가
@@ -44,7 +44,7 @@ public:
 	//Utlity
 	dataType* findDataById(std::string id);
 	void insertionSort();
-	void insertionSort(List<Book>& bookList);
+	void insertionSort(List<Book>& bookList);				//실질적으로 LoanInfo타입만 사용
 	bool isEmpty();
 };
 //Initializer

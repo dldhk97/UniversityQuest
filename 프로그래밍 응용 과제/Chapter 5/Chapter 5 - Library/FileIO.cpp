@@ -87,11 +87,13 @@ void FileIO::readLoanInfoList(List<LoanInfo>& loanInfoList, std::ifstream& file)
 	{
 		LoanInfo* newLoanInfo;
 		std::string state, serial, loanerId, bookId, loanedDate;
-		file >> state >> serial >> loanerId >> bookId >> loanedDate;
+		file >> state;
 
 		if (state == "")
 			break;
-		else if (std::stoi(state) == NOT_FOUND)
+
+		file >> serial >> loanerId >> bookId >> loanedDate;
+		if (std::stoi(state) == NOT_FOUND)
 		{
 			newLoanInfo = new LoanInfo(serial, loanerId, bookId, new Date(loanedDate), nullptr, NOT_FOUND);
 		}

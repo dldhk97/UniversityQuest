@@ -86,15 +86,15 @@ void LoanInfo::display(User* user, Book* book)
 //Compare
 bool LoanInfo::compare(Book* currentBook, Book* targetBook, LoanInfo* targetLoanInfo)
 {
-	int currentBookPriority = currentBook->getPriority();			//우선순위 높음 = int값이 낮음		ex) 0(높음) ~ n(낮음)
+	int currentBookPriority = currentBook->getPriority();									//우선순위 높음 = int값이 낮음		ex) 0(높음) ~ n(낮음)
 	int targetBookPriority = targetBook->getPriority();
 
 	if (currentBookPriority < targetBookPriority)
 		return true;
-	else if (currentBookPriority == targetBookPriority)				//우선순위가 동등하다면 제목으로 비교한다.
+	else if (currentBookPriority == targetBookPriority)										//우선순위가 동등하다면 제목으로 비교한다.
 		if (currentBook->getTitle() < targetBook->getTitle())
 			return true;
-		else if (currentBook->getTitle() == targetBook->getTitle())	//제목이 동등하다면 대출일로 비교한다.
+		else if (currentBook->getTitle() == targetBook->getTitle())							//제목이 동등하다면 대출일로 비교한다.
 			if (this->loanedDate->totalDays() < targetLoanInfo->loanedDate->totalDays())
 				return true;
 	return false;

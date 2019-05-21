@@ -152,7 +152,7 @@ bool IOHandler::readFile(const std::string fileDirectory, List<User>& userList, 
 	{
 		std::string notUsingStr;
 		std::cout << "[SYS]데이터 파일을 찾았습니다. 데이터를 불러옵니다.\n";
-		std::getline(file, notUsingStr);										//첫번째 줄의 [LastID] 읽고 무시
+		std::getline(file, notUsingStr);											//첫번째 줄의 [LastID]는 헤더 처리, 무시함
 
 		//Read Lists
 		fileManager.readLastIdList(userList, bookList, loanInfoList, file);

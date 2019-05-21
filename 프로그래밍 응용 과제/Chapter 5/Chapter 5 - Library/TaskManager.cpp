@@ -179,12 +179,7 @@ void TaskManager::changeBookState(List<User>& userList, List<Book>& bookList, Li
 	{
 		ioh.displayMessage("[SYS]" + currentBook->getTitle() + "은(는) 대여중인 책입니다.");
 		List<LoanInfo> loannedList;
-		for (int i = 0; i < loanInfoList.getSize(); i++)
-		{
-			if (loanInfoList.getData(i)->getBookId() == id && loanInfoList.getData(i)->getReturnDate() == nullptr)
-				loannedList.insertData(new LoanInfo(loanInfoList.getData(i)));
-		}
-		loannedList.insertionSort(bookList);
+		loannedList.insertData(new LoanInfo(findCurrnetLoanInfo(currentBook, bookList, loanInfoList)));
 		displayLoanHistory(userList, bookList, loannedList);
 		return;
 	}
@@ -244,7 +239,7 @@ void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<Loan
 	}
 	if (targetBook->getBookState() == LOANING)
 	{
-		User* anotherLoaner = findLoaner(targetBook, userList, loanInfoList);
+		User* anotherLoaner = findCurrentLoaner(targetBook, userList, loanInfoList);
 		ioh.displayMessage("[SYS]" + targetBook->getTitle() + "은(는) " + anotherLoaner->getName() + "에게 이미 대출중입니다.");
 		return;
 	}
@@ -262,6 +257,7 @@ void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<Loan
 	}
 	loanInfoList.insertData(newLoanInfo);
 	targetBook->setBookState(LOANING);
+
 	ioh.displayMessage("[SYS]" + targetBook->getTitle() + "이(가) " + loaner->getName() + "에게 대출되었습니다.");
 	isDataChanged = true;
 }
@@ -281,13 +277,12 @@ void TaskManager::returnBook(List<Book>& bookList, List<LoanInfo>& loanInfoList)
 		return;
 	}
 	Date* returnDate = ioh.getDate("반납일 :");
-	LoanInfo* targetLoanInfo = findLoanInfoByLoaningBook(targetBook, bookList, loanInfoList);
-	targetLoanInfo->setReturnDate(returnDate);
+	LoanInfo* targetLoanInfo = findCurrnetLoanInfo(targetBook, bookList, loanInfoList);
 
-	long endDays = returnDate->totalDays();
-	long startDays = targetLoanInfo->getLoanedDate()->totalDays();
-	targetLoanInfo->setPeriod(endDays - startDays + 1);
+	targetLoanInfo->setReturnDate(returnDate);
+	targetLoanInfo->setPeriod(returnDate->totalDays() - targetLoanInfo->getLoanedDate()->totalDays() + 1);
 	targetBook->setBookState(LOANABLE);
+
 	ioh.displayMessage("[SYS]" + targetBook->getTitle() + "이(가) 반납되었습니다.");
 }
 void TaskManager::displayLoanHistory(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList)
@@ -307,22 +302,24 @@ void TaskManager::displayLoanHistory(List<User>& userList, List<Book>& bookList,
 	ioh.displayMessage("========================================================================================");
 }
 //Utility
-User* TaskManager::findLoaner(Book* book, List<User>& userList, List<LoanInfo>& loanInfoList)
+//책의 현재 대여자 찾기
+User* TaskManager::findCurrentLoaner(Book* targetBook, List<User>& userList, List<LoanInfo>& loanInfoList)
 {
 	for (int i = 0; i < loanInfoList.getSize(); i++)
 	{
-		if (loanInfoList.getData(i)->getBookId() == book->getId() && loanInfoList.getData(i)->getReturnDate() == nullptr)
+		if (loanInfoList.getData(i)->getBookId() == targetBook->getId() && loanInfoList.getData(i)->getReturnDate() == nullptr)
 		{
 			return userList.findDataById(loanInfoList.getData(i)->getLoanerId());
 		}
 	}
 	return nullptr;
 }
-LoanInfo* TaskManager::findLoanInfoByLoaningBook(Book* book, List<Book>& bookList, List<LoanInfo>& loanInfoList)
+//책의 현재 대여정보 찾기 (반납완료 제외)
+LoanInfo* TaskManager::findCurrnetLoanInfo(Book* targetBook, List<Book>& bookList, List<LoanInfo>& loanInfoList)
 {
 	for (int i = 0; i < loanInfoList.getSize(); i++)
 	{
-		if (loanInfoList.getData(i)->getBookId() == book->getId() && loanInfoList.getData(i)->getReturnDate() == nullptr)
+		if (loanInfoList.getData(i)->getBookId() == targetBook->getId() && loanInfoList.getData(i)->getReturnDate() == nullptr)
 		{
 			return loanInfoList.getData(i);
 		}
