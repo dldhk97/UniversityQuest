@@ -36,11 +36,10 @@ public:
 	dataType* getData(int index);
 	int getSize();
 	
+	//LastID
 	int getLastId(std::string typeName);			//이미 저장된 적이 있는 데이터타입이면, lastID + 1을 반환
 	int getlastIdCnt();
 	Pair<std::string, int> getLastIdInfo(int index);
-
-	//Setter
 	void AddNewLastId(std::string typeName, int lastId);	//새 lastId 추가
 
 	//Utlity
@@ -67,12 +66,12 @@ List<dataType>::~List()
 	if (dataArr != nullptr)
 	{
 		for (int i = 0; i < size; i++)
-		{
 			if (dataArr[i] != nullptr)
 				delete dataArr[i];
-		}
 		delete[] dataArr;
 	}
+	if (lastIdArr != nullptr)
+		delete[] lastIdArr;
 }
 //Memory
 template<typename dataType>
@@ -131,6 +130,7 @@ int List<dataType>::getSize()
 {
 	return size;
 }
+//LastID
 //이미 저장된 적이 있는 데이터타입이면, lastID + 1을 갱신 후 반환
 template<typename dataType>
 int List<dataType>::getLastId(std::string typeName)
@@ -139,8 +139,8 @@ int List<dataType>::getLastId(std::string typeName)
 	if (lastIdIndex == NOT_FOUND)
 	{
 		lastIdArr[lastIdCnt].setFirst(typeName);
-		lastIdArr[lastIdCnt].setSecond(1);
-		return lastIdArr[lastIdCnt++].getSecond();
+		lastIdArr[lastIdCnt++].setSecond(1);
+		return 1;
 	}
 	else
 	{
@@ -159,7 +159,6 @@ Pair<std::string, int> List<dataType>::getLastIdInfo(int index)
 {
 	return lastIdArr[index];
 }
-//Setter
 template<typename dataType>
 void List<dataType>::AddNewLastId(std::string typeName, int lastId)
 {

@@ -1,6 +1,7 @@
 #include "LoanInfo.h"
 #include "IOHandler.h"
 
+//Initializer
 LoanInfo::LoanInfo(LoanInfo* loanInfo)
 {
 	this->serial = loanInfo->serial;
@@ -10,7 +11,6 @@ LoanInfo::LoanInfo(LoanInfo* loanInfo)
 	this->returnDate = loanInfo->returnDate;
 	this->period = loanInfo->period;
 }
-
 LoanInfo::LoanInfo(std::string serial, std::string loanerId, std::string bookId, Date* loanedDate, Date* returnDate, int period)
 {
 	this->serial = serial;
@@ -20,7 +20,14 @@ LoanInfo::LoanInfo(std::string serial, std::string loanerId, std::string bookId,
 	this->returnDate = returnDate;
 	this->period = period;
 }
-
+LoanInfo::~LoanInfo()
+{
+	if (loanedDate != nullptr)
+		delete loanedDate;
+	if (returnDate != nullptr)
+		delete returnDate;
+}
+//Getter
 std::string LoanInfo::getId()
 {
 	return this->bookId;
@@ -41,7 +48,7 @@ std::string LoanInfo::getLoanerId()
 {
 	return this->loanerId;
 }
-
+//Setter
 void LoanInfo::setSerial(std::string serial)
 {
 	this->serial = serial;

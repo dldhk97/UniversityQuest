@@ -15,8 +15,10 @@ private:
 	Date* returnDate;
 	int period;
 public:
+	//Initializer
 	LoanInfo(LoanInfo* loanInfo);
 	LoanInfo(std::string serial, std::string loanerId, std::string bookId, Date* loanedDate, Date* returnDate, int period);
+	~LoanInfo();
 
 	//Getter
 	std::string getId();

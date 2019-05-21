@@ -1,6 +1,13 @@
 #include "Book.h"
 #include "Magazine.h"
 
+//Initializer
+Book::~Book()
+{
+	if (publicationDate != nullptr)
+		delete publicationDate;
+}
+
 //Getter
 std::string Book::getId()
 {

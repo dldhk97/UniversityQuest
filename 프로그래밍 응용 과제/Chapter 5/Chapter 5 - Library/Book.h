@@ -15,6 +15,8 @@ protected:
 	Date* publicationDate;
 	int bookState;
 public:
+	//Initializer
+	~Book();
 	//Getter
 	std::string getId();
 	int getBookState();
