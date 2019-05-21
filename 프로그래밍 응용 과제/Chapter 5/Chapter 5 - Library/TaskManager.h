@@ -23,5 +23,6 @@ public:
 
 	//Utility
 	User* findLoaner(Book* book, List<User>& userList, List<LoanInfo>& loanInfoList);
+	LoanInfo* findLoanInfoByLoaningBook(Book* book, List<Book>& bookList, List<LoanInfo>& loanInfoList);
 };
 

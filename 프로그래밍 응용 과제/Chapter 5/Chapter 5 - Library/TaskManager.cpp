@@ -281,7 +281,7 @@ void TaskManager::returnBook(List<Book>& bookList, List<LoanInfo>& loanInfoList)
 		return;
 	}
 	Date* returnDate = ioh.getDate("¹Ý³³ÀÏ :");
-	LoanInfo* targetLoanInfo = loanInfoList.getData(loanInfoList.findLoaningBookIndexById(targetBook->getId()));
+	LoanInfo* targetLoanInfo = findLoanInfoByLoaningBook(targetBook, bookList, loanInfoList);
 	targetLoanInfo->setReturnDate(returnDate);
 
 	long endDays = returnDate->totalDays();
@@ -316,4 +316,16 @@ User* TaskManager::findLoaner(Book* book, List<User>& userList, List<LoanInfo>& 
 			return userList.findDataById(loanInfoList.getData(i)->getLoanerId());
 		}
 	}
+	return nullptr;
+}
+LoanInfo* TaskManager::findLoanInfoByLoaningBook(Book* book, List<Book>& bookList, List<LoanInfo>& loanInfoList)
+{
+	for (int i = 0; i < loanInfoList.getSize(); i++)
+	{
+		if (loanInfoList.getData(i)->getBookId() == book->getId() && loanInfoList.getData(i)->getReturnDate() == nullptr)
+		{
+			return loanInfoList.getData(i);
+		}
+	}
+	return nullptr;
 }

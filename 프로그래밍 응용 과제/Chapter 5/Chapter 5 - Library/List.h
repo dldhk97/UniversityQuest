@@ -30,7 +30,6 @@ public:
 	
 	//Control
 	void insertData(dataType* data);
-	void deleteData(int index);
 
 	//Getter
 	dataType* getData(int index);
@@ -44,7 +43,6 @@ public:
 
 	//Utlity
 	dataType* findDataById(std::string id);
-	int findLoaningBookIndexById(std::string id);
 	void insertionSort();
 	void insertionSort(List<Book>& bookList);
 	bool isEmpty();
@@ -109,16 +107,6 @@ void List<dataType>::insertData(dataType* data)
 		resize(capacity * 2);
 	dataArr[size++] = data;
 }
-template<typename dataType>
-void List<dataType>::deleteData(int index)
-{
-	delete dataArr[index];
-	dataArr[index] = dataArr[size - 1];
-	dataArr[size - 1] = nullptr;
-	size--;
-	if (size <= capacity / 4)
-		resize(capacity / 2);
-}
 //Getter
 template<typename dataType> 
 dataType* List<dataType>::getData(int index)
@@ -173,15 +161,6 @@ dataType* List<dataType>::findDataById(std::string id)
 		if (dataArr[index]->getId() == id)
 			return dataArr[index];
 	return nullptr;
-}
-//LoanInfo만을 위한 메소드 : 검색할 책 id 중 대출중인(반환되지 않은) 도서 index 반환
-template<typename dataType>
-int List<dataType>::findLoaningBookIndexById(std::string id)
-{
-	for (int index = 0; index < size; index++)
-		if (dataArr[index]->getBookId() == id && dataArr[index]->getReturnDate() == nullptr)
-			return index;
-	return NOT_FOUND;
 }
 template<typename dataType> 
 void List<dataType>::insertionSort()
