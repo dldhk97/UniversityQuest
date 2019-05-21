@@ -10,7 +10,7 @@ private:
 public:
 	Date(std::string dateStr);
 	
-	int totalDays();
+	long totalDays();
 	std::string to_string();
 };
 

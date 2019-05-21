@@ -4,8 +4,15 @@
 
 using namespace std;
 
-//메모리 해제하는거 기억해라
-//LoanInfo 제대로 정렬되는지 봐라
+//완료//
+//1. 메모리 해제하는거 기억해라
+//2. LoanInfo 제대로 정렬되는지 봐라
+
+//해야할 것//
+//1. 전체적인 리팩토링
+//2. IOHandler에서 메뉴와 readFile, writeFile 리팩토링
+//3. TaskManager 리팩토링
+//4. 쓸데없는 include 삭제
 
 const std::string FILE_DIRECTORY = "C:\\LibraryManager.dat";
 
@@ -42,6 +49,6 @@ int main()
 	}
 	if (isDataChanged)
 		ioh.writeFile(FILE_DIRECTORY, userList, bookList, loanInfoList);
-	ioh.displayMessage("종료합니다.");
+	ioh.displayMessage("[SYS]종료합니다.");
 	return 0;
 }

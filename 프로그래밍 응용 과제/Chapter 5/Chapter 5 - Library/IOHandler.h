@@ -34,11 +34,11 @@ public:
 	Professor* getProfessor();
 	Magazine* getMagazine();
 	TextBook* getTextBook();
-	Date* getDate(std::string message);
 
 	//Getter
 	int getInt(std::string message);
 	std::string getString(std::string message);
+	Date* getDate(std::string message);
 
 	//Find
 	template <typename dataType>

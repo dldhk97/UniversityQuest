@@ -22,7 +22,7 @@ Date::Date(std::string dateStr)
 	}
 }
 
-int Date::totalDays()		//1년 1월 1일부터 currentDate까지의 일 수
+long Date::totalDays()		//1년 1월 1일부터 currentDate까지의 일 수
 {
 	int months[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	int i;

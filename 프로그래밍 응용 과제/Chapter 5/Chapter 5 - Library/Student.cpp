@@ -28,7 +28,7 @@ void Student::display()
 	std::string userStateStr = userState == VALID ? "ÀçÇÐ" : "Á¹¾÷";
 	ioh.displayMessageAsCell(id, 6);
 	ioh.displayMessageAsCell(name, 6);
-	ioh.displayMessageAsCell(department, 6);
+	ioh.displayMessageAsCell(department, 12);
 	ioh.displayMessageAsCell(userStateStr, 6);
 	ioh.displayMessageAsCell("\t", 6);
 	ioh.displayMessageAsCell(year, 6);

@@ -106,21 +106,21 @@ void TaskManager::changeUserState(List<User>& userList, List<Book>& bookList, Li
 	IOHandler ioh;
 	if (userList.getSize() <= 0)
 	{
-		ioh.displayMessage("사용자 목록이 비어있습니다.");
+		ioh.displayMessage("[SYS]사용자 목록이 비어있습니다.");
 		return;
 	}
 	std::string id = ioh.getString("변경할 구성원의 ID 입력 :");
 	int index = userList.findDataById(id);
 	if (index == NOT_FOUND)
 	{
-		ioh.displayMessage("구성원을 찾을 수 없습니다.");
+		ioh.displayMessage("[SYS]구성원을 찾을 수 없습니다.");
 		return;
 	}
 	User* currentUser = userList.getData(index);
 	if (loanInfoList.findDataByLoanerId(id) != NOT_FOUND)
 	{
 		List<LoanInfo> loannedList;
-		ioh.displayMessage(currentUser->getName() + "이(가) 대여중인 책이 존재합니다. 대여중인 책 목록은 아래와 같습니다.");
+		ioh.displayMessage("[SYS]" + currentUser->getName() + "이(가) 대여중인 책이 존재합니다. 대여중인 책 목록은 아래와 같습니다.");
 		for (int i = 0; i < loanInfoList.getSize(); i++)
 		{
 			if (loanInfoList.getData(i)->getLoanerId() == id && loanInfoList.getData(i)->getReturnDate() == nullptr)
@@ -133,27 +133,27 @@ void TaskManager::changeUserState(List<User>& userList, List<Book>& bookList, Li
 	if (currentUser->getUserState() == VALID)
 	{
 		currentUser->setUserState(INVALID);
-		ioh.displayMessage("변경되었습니다.");
+		ioh.displayMessage("[SYS]변경되었습니다.");
 		isDataChanged = true;
 	}
 	else
 	{
-		ioh.displayMessage("이미 비활성화된 구성원입니다.");
+		ioh.displayMessage("[SYS]이미 비활성화된 구성원입니다.");
 	}
 	return;
 }
 void TaskManager::displayUserList(List<User>& userList)
 {
 	IOHandler ioh;
-	ioh.displayMessage("==================================================");
-	ioh.displayMessage("ID \t성명 \t학과 \t상태 \t전공 \t연구실 \t학년 \t학점 \t연락처");
-	ioh.displayMessage("--------------------------------------------------");
+	ioh.displayMessage("==============================================================================");
+	ioh.displayMessage("ID \t성명 \t학과 \t\t상태 \t전공 \t연구실 \t학년 \t학점 \t연락처");
+	ioh.displayMessage("------------------------------------------------------------------------------");
 	int size = userList.getSize();
 	for (int i = 0; i < size; i++)
 	{
 		ioh.displayUser(userList.getData(i));
 	}
-	ioh.displayMessage("==================================================");
+	ioh.displayMessage("==============================================================================");
 }
 
 void TaskManager::insertBook(List<Book>& bookList)
@@ -186,26 +186,26 @@ void TaskManager::changeBookState(List<User>& userList, List<Book>& bookList, Li
 	IOHandler ioh;
 	if (bookList.getSize() <= 0)
 	{
-		ioh.displayMessage("도서 목록이 비어있습니다.");
+		ioh.displayMessage("[SYS]도서 목록이 비어있습니다.");
 		return;
 	}
 	std::string id = ioh.getString("변경할 도서의 ID 입력 :");
 	int index = bookList.findDataById(id);
 	if (index == NOT_FOUND)
 	{
-		ioh.displayMessage("도서를 찾을 수 없습니다.");
+		ioh.displayMessage("[SYS]도서를 찾을 수 없습니다.");
 		return;
 	}
 	Book* currentBook = bookList.getData(index);
 	if (currentBook->getBookState() == LOANABLE)
 	{
 		currentBook->setBookState(INLOANBLE);
-		ioh.displayMessage("변경되었습니다.");
+		ioh.displayMessage("[SYS]변경되었습니다.");
 		isDataChanged = true;
 	}
 	else if (currentBook->getBookState() == LOANING)
 	{
-		ioh.displayMessage(currentBook->getTitle() + "은(는) 대출중인 책입니다.");
+		ioh.displayMessage("[SYS]" + currentBook->getTitle() + "은(는) 대출중인 책입니다.");
 		List<LoanInfo> loannedList;
 		for (int i = 0; i < loanInfoList.getSize(); i++)
 		{
@@ -218,22 +218,22 @@ void TaskManager::changeBookState(List<User>& userList, List<Book>& bookList, Li
 	}
 	else
 	{
-		ioh.displayMessage("이미 대출 불가능한 책입니다.");
+		ioh.displayMessage("[SYS]이미 대출 불가능한 책입니다.");
 	}
 	return;
 }
 void TaskManager::displayBookList(List<Book>& bookList)
 {
 	IOHandler ioh;
-	ioh.displayMessage("==================================================");
+	ioh.displayMessage("================================================================================================");
 	ioh.displayMessage("ID \t도서명 \t\t출판사 \t\t출판년도 \t\t상태 \t\t권/호 \t세부주제");
-	ioh.displayMessage("--------------------------------------------------");
+	ioh.displayMessage("------------------------------------------------------------------------------------------------");
 	int size = bookList.getSize();
 	for (int i = 0; i < size; i++)
 	{
 		ioh.displayBook(bookList.getData(i));
 	}
-	ioh.displayMessage("==================================================");
+	ioh.displayMessage("================================================================================================");
 }
 
 void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
@@ -241,7 +241,7 @@ void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<Loan
 	IOHandler ioh;
 	if (userList.getSize() <= 0 || bookList.getSize() <= 0)
 	{
-		ioh.displayMessage("사용자 목록 또는 도서 목록이 비어있습니다.");
+		ioh.displayMessage("[SYS]사용자 목록 또는 도서 목록이 비어있습니다.");
 		return;
 	}
 
@@ -250,7 +250,7 @@ void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<Loan
 		return;
 	if (loaner->getUserState() == INVALID)
 	{
-		ioh.displayMessage(loaner->getName() + "은(는) 사용 중지된 사용자입니다.");
+		ioh.displayMessage("[SYS]" + loaner->getName() + "은(는) 사용 중지된 사용자입니다.");
 		return;
 	}
 	Book* targetBook = ioh.findDataById("도서 ID :", bookList);
@@ -269,12 +269,12 @@ void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<Loan
 			}
 		}
 		anotherLoaner = userList.getData(userList.findDataById(anotherLoanerId));
-		ioh.displayMessage(targetBook->getTitle() + "은(는) " + anotherLoaner->getName() + "에게 이미 대출중입니다.");
+		ioh.displayMessage("[SYS]" + targetBook->getTitle() + "은(는) " + anotherLoaner->getName() + "에게 이미 대출중입니다.");
 		return;
 	}
 	else if (targetBook->getBookState() == INLOANBLE)
 	{
-		ioh.displayMessage(targetBook->getTitle() + "은(는) 대출불가 도서입니다.");
+		ioh.displayMessage("[SYS]" + targetBook->getTitle() + "은(는) 대출불가 도서입니다.");
 		return;
 	}
 	Date* loanedDate = ioh.getDate("대출일 :");
@@ -286,7 +286,7 @@ void TaskManager::loanBook(List<User>& userList, List<Book>& bookList, List<Loan
 	}
 	loanInfoList.insertData(newLoanInfo);
 	targetBook->setBookState(LOANING);
-	ioh.displayMessage(targetBook->getTitle() + "이(가) " + loaner->getName() + "에게 대출되었습니다.");
+	ioh.displayMessage("[SYS]" + targetBook->getTitle() + "이(가) " + loaner->getName() + "에게 대출되었습니다.");
 	isDataChanged = true;
 }
 void TaskManager::returnBook(List<Book>& bookList, List<LoanInfo>& loanInfoList)
@@ -299,18 +299,18 @@ void TaskManager::returnBook(List<Book>& bookList, List<LoanInfo>& loanInfoList)
 	LoanInfo* targetLoanInfo = loanInfoList.getData(loanInfoList.findLoaningBookById(targetBook->getId()));
 	targetLoanInfo->setReturnDate(returnDate);
 
-	int endDays = returnDate->totalDays();
-	int startDays = targetLoanInfo->getLoanedDate()->totalDays();
+	long endDays = returnDate->totalDays();
+	long startDays = targetLoanInfo->getLoanedDate()->totalDays();
 	targetLoanInfo->setPeriod(endDays - startDays + 1);
 	targetBook->setBookState(LOANABLE);
-	ioh.displayMessage(targetBook->getTitle() + "이(가) 반납되었습니다.");
+	ioh.displayMessage("[SYS]" + targetBook->getTitle() + "이(가) 반납되었습니다.");
 }
 void TaskManager::displayLoanHistory(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList)
 {
 	IOHandler ioh;
-	ioh.displayMessage("==================================================");
+	ioh.displayMessage("========================================================================================");
 	ioh.displayMessage("구분 \t도서명 \t\tID \t대출자 \tID \t대출일 \t\t반납일 \t\t대출기간");
-	ioh.displayMessage("--------------------------------------------------");
+	ioh.displayMessage("----------------------------------------------------------------------------------------");
 	int size = loanInfoList.getSize();
 	for (int i = 0; i < size; i++)
 	{
@@ -319,5 +319,5 @@ void TaskManager::displayLoanHistory(List<User>& userList, List<Book>& bookList,
 		Book* targetBook = bookList.getData(bookList.findDataById(targetLoanInfo->getId()));
 		ioh.displayLoanInfo(loanner, targetBook, targetLoanInfo);
 	}
-	ioh.displayMessage("==================================================");
+	ioh.displayMessage("========================================================================================");
 }
