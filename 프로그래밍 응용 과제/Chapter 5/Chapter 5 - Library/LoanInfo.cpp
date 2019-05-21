@@ -103,9 +103,9 @@ bool LoanInfo::compare(Book* currentBook, Book* targetBook, LoanInfo* targetLoan
 //Write
 std::string LoanInfo::to_string()
 {
-	bool isReturned = returnDate == nullptr ? 0 : 1;
+	bool isReturned = returnDate != nullptr ? true : false;
 	if (isReturned)
-		return std::to_string(isReturned) + " " + serial + " " + loanerId + " " + bookId + " " + loanedDate->to_string() + " " + returnDate->to_string() + " " + std::to_string(period);
+		return std::to_string(1) + " " + serial + " " + loanerId + " " + bookId + " " + loanedDate->to_string() + " " + returnDate->to_string() + " " + std::to_string(period);
 	else
-		return std::to_string(isReturned) + " " + serial + " " + loanerId + " " + bookId + " " + loanedDate->to_string();
+		return std::to_string(NOT_FOUND) + " " + serial + " " + loanerId + " " + bookId + " " + loanedDate->to_string();
 }

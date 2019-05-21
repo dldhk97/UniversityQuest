@@ -145,10 +145,12 @@
   <ItemGroup>
     <ClCompile Include="Book.cpp" />
     <ClCompile Include="Date.cpp" />
+    <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="IOHandler.cpp" />
     <ClCompile Include="LoanInfo.cpp" />
     <ClCompile Include="Magazine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Professor.cpp" />
     <ClCompile Include="Student.cpp" />
     <ClCompile Include="TaskManager.cpp" />
@@ -158,10 +160,12 @@
   <ItemGroup>
     <ClInclude Include="Book.h" />
     <ClInclude Include="Date.h" />
+    <ClInclude Include="FileIO.h" />
     <ClInclude Include="IOHandler.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="LoanInfo.h" />
     <ClInclude Include="Magazine.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Pair.h" />
     <ClInclude Include="Professor.h" />
     <ClInclude Include="Student.h" />

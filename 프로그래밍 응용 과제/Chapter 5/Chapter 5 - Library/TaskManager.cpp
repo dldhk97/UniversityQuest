@@ -1,78 +1,60 @@
 #include "TaskManager.h"
 
-void TaskManager::getUserMenu(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
+void TaskManager::userMenuAction(int selectedOption, List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
-	IOHandler ioh;
-	int userInput;
-	while (1)
+	if (selectedOption == EXIT)
+		return;
+	switch (selectedOption)
 	{
-		userInput = ioh.getMenu(USER);
-		if (userInput == EXIT)
-			break;
-		switch (userInput)
-		{
-		case INSERTUSER:
-			insertUser(userList);
-			isDataChanged = true;
-			break;
-		case CHANGESTATE:
-			changeUserState(userList, bookList, loanInfoList, isDataChanged);
-			break;
-		case DISPLAYUSERS:
-			userList.insertionSort();
-			displayUserList(userList);
-			break;
-		}
+	case INSERTUSER:
+		insertUser(userList);
+		isDataChanged = true;
+		break;
+	case CHANGESTATE:
+		changeUserState(userList, bookList, loanInfoList, isDataChanged);
+		break;
+	case DISPLAYUSERS:
+		userList.insertionSort();
+		displayUserList(userList);
+		break;
 	}
 }
-void TaskManager::getBookMenu(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
+void TaskManager::bookMenuAction(int selectedOption, List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
-	IOHandler ioh;
-	int userInput;
-	while (1)
+	if (selectedOption == EXIT)
+		return;
+	switch (selectedOption)
 	{
-		userInput = ioh.getMenu(BOOK);
-		if (userInput == EXIT)
-			break;
-		switch (userInput)
-		{
-		case INSERTBOOK:
-			insertBook(bookList);
-			isDataChanged = true;
-			break;
-		case CHANGESTATE:
-			changeBookState(userList, bookList, loanInfoList, isDataChanged);
-			break;
-		case DISPLAYBOOKS:
-			bookList.insertionSort();
-			displayBookList(bookList);
-			break;
-		}
+	case INSERTBOOK:
+		insertBook(bookList);
+		isDataChanged = true;
+		break;
+	case CHANGESTATE:
+		changeBookState(userList, bookList, loanInfoList, isDataChanged);
+		break;
+	case DISPLAYBOOKS:
+		bookList.insertionSort();
+		displayBookList(bookList);
+		break;
 	}
 }
-void TaskManager::getLoanMenu(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
+void TaskManager::loanMenuAction(int selectedOption, List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged)
 {
-	IOHandler ioh;
-	int userInput;
-	while (1)
+	if (selectedOption == EXIT)
+		return;
+	switch (selectedOption)
 	{
-		userInput = ioh.getMenu(LOAN);
-		if (userInput == EXIT)
-			break;
-		switch (userInput)
-		{
-		case LOANBOOK:
-			loanBook(userList, bookList, loanInfoList, isDataChanged);
-			break;
-		case RETURNBOOK:
-			returnBook(bookList, loanInfoList);
-			isDataChanged = true;
-			break;
-		case DISPLAYHISTORY:
-			loanInfoList.insertionSort(bookList);
-			displayLoanHistory(userList, bookList, loanInfoList);
-			break;
-		}
+	case LOANBOOK:
+		loanBook(userList, bookList, loanInfoList, isDataChanged);
+		break;
+	case RETURNBOOK:
+		returnBook(bookList, loanInfoList);
+		isDataChanged = true;
+		break;
+	case DISPLAYHISTORY:
+		loanInfoList.insertionSort(bookList);
+		displayLoanHistory(userList, bookList, loanInfoList);
+		break;
 	}
 }
 
@@ -117,28 +99,31 @@ void TaskManager::changeUserState(List<User>& userList, List<Book>& bookList, Li
 		return;
 	}
 	User* currentUser = userList.getData(index);
-	if (loanInfoList.findDataByLoanerId(id) != NOT_FOUND)
+
+	//해당사용자가 대여중인 책 조사
+	List<LoanInfo> loannedList;
+	for (int i = 0; i < loanInfoList.getSize(); i++)
 	{
-		List<LoanInfo> loannedList;
+		if (loanInfoList.getData(i)->getLoanerId() == id && loanInfoList.getData(i)->getReturnDate() == nullptr)
+			loannedList.insertData(new LoanInfo(loanInfoList.getData(i)));
+	}
+	if (loannedList.getSize() > 0)
+	{
 		ioh.displayMessage("[SYS]" + currentUser->getName() + "이(가) 대여중인 책이 존재합니다. 대여중인 책 목록은 아래와 같습니다.");
-		for (int i = 0; i < loanInfoList.getSize(); i++)
-		{
-			if (loanInfoList.getData(i)->getLoanerId() == id && loanInfoList.getData(i)->getReturnDate() == nullptr)
-				loannedList.insertData(new LoanInfo(loanInfoList.getData(i)));
-		}
 		loannedList.insertionSort(bookList);
 		displayLoanHistory(userList, bookList, loannedList);
 		return;
 	}
-	if (currentUser->getUserState() == VALID)
+
+	if (currentUser->getUserState() == INVALID)
 	{
-		currentUser->setUserState(INVALID);
-		ioh.displayMessage("[SYS]변경되었습니다.");
-		isDataChanged = true;
+		ioh.displayMessage("[SYS]이미 비활성화된 구성원입니다.");
 	}
 	else
 	{
-		ioh.displayMessage("[SYS]이미 비활성화된 구성원입니다.");
+		currentUser->setUserState(INVALID);
+		ioh.displayMessage("[SYS]" + currentUser->getName() + "이(가) 비활성화 되었습니다.");
+		isDataChanged = true;
 	}
 	return;
 }
@@ -205,7 +190,7 @@ void TaskManager::changeBookState(List<User>& userList, List<Book>& bookList, Li
 	}
 	else if (currentBook->getBookState() == LOANING)
 	{
-		ioh.displayMessage("[SYS]" + currentBook->getTitle() + "은(는) 대출중인 책입니다.");
+		ioh.displayMessage("[SYS]" + currentBook->getTitle() + "은(는) 대여중인 책입니다.");
 		List<LoanInfo> loannedList;
 		for (int i = 0; i < loanInfoList.getSize(); i++)
 		{

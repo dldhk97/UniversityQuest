@@ -13,6 +13,8 @@
 #include "Magazine.h"
 #include "TextBook.h"
 #include "Date.h"
+#include "FileIO.h"
+#include "Menu.h"
 
 enum MenuType {MAIN = 0, USER, BOOK, LOAN, EXIT};
 enum UserManage { INSERTUSER = 1, CHANGESTATE, DISPLAYUSERS};
@@ -22,10 +24,7 @@ enum LoanManage { LOANBOOK = 1, RETURNBOOK, DISPLAYHISTORY};
 class IOHandler
 {
 public:
-	//Menu
-	int getMenu(int menuType);
-
-	//Utility
+	//Type Getter
 	int getUserType();
 	int getBookType();
 
@@ -53,7 +52,6 @@ public:
 
 	//File I/O
 	bool readFile(const std::string fileDirectory, List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList);
-	void createEmptyFile(const std::string fileDirectory);
 	bool writeFile(const std::string fileDirectory, List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList);
 };
 

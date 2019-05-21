@@ -5,9 +5,9 @@
 class TaskManager
 {
 public:
-	void getUserMenu(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged);
-	void getBookMenu(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged);
-	void getLoanMenu(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged);
+	void userMenuAction(int selectedOption, List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged);
+	void bookMenuAction(int selectedOption, List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged);
+	void loanMenuAction(int selectedOption, List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged);
 
 	void insertUser(List<User>& userList);
 	void changeUserState(List<User>& userList, List<Book>& bookList, List<LoanInfo>& loanInfoList, bool& isDataChanged);
