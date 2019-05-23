@@ -168,7 +168,7 @@ void List<dataType>::insertionSort()
 	int i, j;
 	dataType* temp;
 
-	for (i = 1; i < size; i++)
+	for (i = 0; i < size; i++)
 	{
 		j = i;
 		while (j > 0 && dataArr[j-1]->compare(dataArr[j]))
@@ -186,7 +186,7 @@ void List<dataType>::insertionSort(List<Book>& bookList)
 	int i, j;
 	dataType* temp;
 
-	for (i = 1; i < size; i++)
+	for (i = 0; i < size; i++)
 	{
 		j = i;
 		while (j > 0 && dataArr[j]->compare(bookList.findDataById(dataArr[j]->getBookId()), bookList.findDataById(dataArr[j - 1]->getBookId()), dataArr[j - 1]))
