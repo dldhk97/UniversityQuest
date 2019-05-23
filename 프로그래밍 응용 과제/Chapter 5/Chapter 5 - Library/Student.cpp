@@ -30,7 +30,7 @@ void Student::display()
 	ioh.displayShortMessage(name, 6);
 	ioh.displayShortMessage(department, 12);
 	ioh.displayShortMessage(userStateStr, 6);
-	ioh.displayShortMessage("\t", 6);
+	ioh.displayShortMessage("\t\t", 6);
 	ioh.displayShortMessage(year, 6);
 	ioh.displayShortMessage(grade, 6);
 	ioh.displayMessage(contact);

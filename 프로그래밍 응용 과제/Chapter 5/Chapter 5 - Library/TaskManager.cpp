@@ -126,15 +126,15 @@ void TaskManager::changeUserState(List<User>& userList, List<Book>& bookList, Li
 void TaskManager::displayUserList(List<User>& userList)
 {
 	IOHandler ioh;
-	ioh.displayMessage("==============================================================================");
-	ioh.displayMessage("ID \t성명 \t학과 \t\t상태 \t전공 \t연구실 \t학년 \t학점 \t연락처");
-	ioh.displayMessage("------------------------------------------------------------------------------");
+	ioh.displayMessage("======================================================================================");
+	ioh.displayMessage("ID \t성명 \t학과 \t\t상태 \t전공 \t\t연구실 \t학년 \t학점 \t연락처");
+	ioh.displayMessage("--------------------------------------------------------------------------------------");
 	int size = userList.getSize();
 	for (int i = 0; i < size; i++)
 	{
 		ioh.displayUser(userList.getData(i));
 	}
-	ioh.displayMessage("==============================================================================");
+	ioh.displayMessage("======================================================================================");
 }
 
 void TaskManager::insertBook(List<Book>& bookList)

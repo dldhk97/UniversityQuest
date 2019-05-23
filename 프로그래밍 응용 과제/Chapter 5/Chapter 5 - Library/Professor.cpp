@@ -29,7 +29,7 @@ void Professor::display()
 	ioh.displayShortMessage(name, 6);
 	ioh.displayShortMessage(department, 12);
 	ioh.displayShortMessage(userStateStr, 6);
-	ioh.displayShortMessage(major, 6);
+	ioh.displayShortMessage(major, 12);
 	ioh.displayMessage(laboratory);
 }
 
