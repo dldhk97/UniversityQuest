@@ -150,16 +150,18 @@ bool IOHandler::readFile(const std::string fileDirectory, List<User>& userList, 
 	file.open(fileDirectory);
 	if (file.is_open())
 	{
-		std::string notUsingStr;
+		std::string firstLine;
 		std::cout << "[SYS]데이터 파일을 찾았습니다. 데이터를 불러옵니다.\n";
-		std::getline(file, notUsingStr);											//첫번째 줄의 [LastID]는 헤더 처리, 무시함
-
-		//Read Lists
-		fileManager.readLastIdList(userList, bookList, loanInfoList, file);
-		fileManager.readUserList(userList, file);
-		fileManager.readBookList(bookList, file);
-		fileManager.readLoanInfoList(loanInfoList, file);
-
+		std::getline(file, firstLine);
+		if (firstLine == "[LastID]")
+		{
+			//Read Lists
+			fileManager.readLastIdList(userList, bookList, loanInfoList, file);
+			fileManager.readUserList(userList, file);
+			fileManager.readBookList(bookList, file);
+			fileManager.readLoanInfoList(loanInfoList, file);
+		}
+		
 		file.close();
 		return true;
 	}
