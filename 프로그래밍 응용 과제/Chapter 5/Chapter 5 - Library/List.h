@@ -1,5 +1,5 @@
+//List.h
 #pragma once
-
 #include "Pair.h"
 #include "Book.h"
 
@@ -77,14 +77,17 @@ void List<dataType>::resize(int newCapacity)
 {
 	if (newCapacity < DEFAULT_CAPACITY)
 		return;
+
 	dataType** tempArr = new dataType* [size];
 	for (int i = 0; i < size; i++)
 		tempArr[i] = dataArr[i];
 	delete[] dataArr;
+
 	dataArr = new dataType* [newCapacity];
 	for (int i = 0; i < size; i++)
 		dataArr[i] = tempArr[i];
 	delete[] tempArr;
+
 	capacity = newCapacity;
 }
 //LastID

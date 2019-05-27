@@ -1,3 +1,4 @@
+//Date.cpp
 #include "Date.h"
 
 Date::Date(std::string dateStr)
@@ -22,11 +23,11 @@ Date::Date(std::string dateStr)
 	}
 }
 
-long Date::totalDays()		//1년 1월 1일부터 currentDate까지의 일 수
+long Date::totalDays()		//1년 1월 1일부터 현재 날짜까지의 일 수
 {
 	int months[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	int i;
-	long total = 0L;
+	long total = 0L;		//결과값의 크기가 엄청 커질 수 있음.
 
 	//4로 나누어지는 회수-100으로 나누어지는 횟수(평년)+400으로 나누어지는 횟수
 	total = (year - 1) * 365L + (year - 1) / 4 - (year - 1) / 100 + (year - 1) / 400;

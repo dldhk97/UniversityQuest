@@ -1,3 +1,4 @@
+//Pair.h
 #pragma once
 
 template <typename dataType1, typename dataType2>
@@ -17,7 +18,6 @@ public:
 	//Setter
 	void setFirst(dataType1 first);
 	void setSecond(dataType2 second);
-
 };
 
 template <typename dataType1, typename dataType2>

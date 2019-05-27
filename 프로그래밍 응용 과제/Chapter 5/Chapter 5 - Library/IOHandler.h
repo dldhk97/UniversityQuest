@@ -1,5 +1,5 @@
+//IOHandler.h
 #pragma once
-
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -12,9 +12,7 @@
 #include "Professor.h"
 #include "Magazine.h"
 #include "TextBook.h"
-#include "Date.h"
 #include "FileIO.h"
-#include "Menu.h"
 
 enum MenuType {MAIN = 0, USER, BOOK, LOAN, EXIT};
 enum UserManage { INSERTUSER = 1, CHANGESTATE, DISPLAYUSERS};

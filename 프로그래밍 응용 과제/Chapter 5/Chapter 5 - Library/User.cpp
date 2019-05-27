@@ -1,3 +1,4 @@
+//User.cpp
 #include "User.h"
 #include "Professor.h"
 
@@ -26,7 +27,6 @@ void User::setUserState(int userState)
 //Display
 void User::display()
 {
-
 }
 //Compare
 int User::getPriority(User* user)

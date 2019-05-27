@@ -1,3 +1,4 @@
+//Magazine.cpp
 #include "Magazine.h"
 #include "IOHandler.h"
 

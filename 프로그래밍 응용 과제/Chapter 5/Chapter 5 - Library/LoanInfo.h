@@ -1,9 +1,7 @@
+//LoanInfo.h
 #pragma once
-
-#include <iostream>
 #include "User.h"
 #include "Book.h"
-#include "Date.h"
 
 class IOHandler;
 
@@ -28,7 +26,7 @@ public:
 	std::string getLoanerId();
 
 	//Setter
-	void setSerial(std::string Serial);
+	void setSerial(std::string serial);
 	void setReturnDate(Date* returnDate);
 	void setPeriod(int period);
 
